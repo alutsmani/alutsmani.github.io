@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/fixedheader/3.2.0/css/fixedHeader.bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"
+    />
+
+    <!-- link menambah icon save -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
+        integrity="sha384-ezpkB+RFOoLHN/BCjG1ua8Ddz9LOiwlDtatpHXSXGO2AoF3M+I6U63UoVPSELYU1" 
+        crossorigin="anonymous"
+    />
+
+    <title>Pendaftaran Santri Baru</title>
+  </head>
+  <body>
+    <br>
+    <div style="text-align: center;">
+        <img src="https://i.ibb.co/Qb3Z7h0/icon.png" alt="icon">
+    </div>    
+    <div class="container">
+        <br>
+        <div class="cool-box" id="KotakLogin">
+            <input type="tel" id="NIK" class="form-control mb-2" placeholder="Masukkan NIK (16 karakter)" maxlength=16 oninput="validateNIK(this)" />
+            <br>
+            <!-- Tombol untuk mentrigger fungsi saat NIK diisi -->
+            <button type="button" class="btn btn-primary mb-2" id="Daftar" onclick="onNIKInput()">Daftar</button> 
+        </div>
+        <br>
+        <div class="Biodata" id="Melanjutkan">
+            <select id="Melanjutkan1" class="form-control mb-2" onchange="updateFormal(this.value)">
+                <option value="" disabled selected>Formal Mendaftar di ... </option>
+                <option value="MTs">MTs</option>
+                <option value="SMP">SMP</option>
+                <option value="SMAI">SMAI</option>
+                <option value="STAI">STAI</option>
+                <option value="Tidak Sekolah">Tidak Sekolah</option>
+            </select>
+            <input type="hidden" id="MelanjutkanKe" class="form-control mb-2" placeholder="Melanjutkan Ke" />
+            
+        </div>
+        
+<!-- Teksbox untuk biodata  (akan diisi secara otomatis) ----------------------------->
+    <form id="FormPendaftaran">
+        <div class="Biodata" id="Biodata">
+               
+            <label for="Biodata">Biodata Santri</label>
+            <!-- Teksbox untuk Nama (akan diisi secara otomatis) -->
+            <input type="text" id="Nama" class="form-control mb-2" placeholder="Nama" />
+            <input type="tel" id="NoKK" class="form-control mb-2" placeholder="No KK (16 Karakter)" maxlength=16 />
+            <input type="tel" id="NISN" class="form-control mb-2" placeholder="NISN (10 angka)"maxlength=10 />
+            
+            <div class="TTL" id="TTL">
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="text" id="TempatLahir" class="form-control mb-2" placeholder="Tempat Lahir" />
+        
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="date" id="TanggalLahir" class="form-control mb-2" placeholder="Tanggal Lahir" />
+            </div>
+            <div class="TTL" id="TTL">
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="tel" id="AnakKe" class="form-control mb-2" placeholder="Anak Ke" />
+        
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="tel" id="JumlahSaudara" class="form-control mb-2" placeholder="Jumlah Saudara" />
+            </div>
+            <select id="Gender1" class="form-control mb-2" onchange="document.getElementById('Gender').value = this.value;">
+                <option value="" disabled selected>Jenis Kelamin</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+            </select>
+            <input type="hidden" id="Gender" class="form-control mb-2" placeholder="Jenis Kelamin" oninput="document.getElementById('Gender1').value = (this.value === '') ? '' : this.value;">
+            
+            <input type="text" id="Hobi" list="daftarHobi" class="form-control mb-2" placeholder="Hobi" />
+
+            <datalist id="daftarHobi">
+                <option value="Membaca">
+                <option value="Berkebun">
+                <option value="Memasak">
+                <option value="Olahraga">
+                <option value="Traveling">
+                <option value="Menulis">
+                <option value="Fotografi">
+                <option value="Musik">
+                <option value="Menggambar">
+                <option value="Pencak Silat">
+                <option value="Berenang">
+                <option value="Meditasi">
+                <option value="Menyanyi">
+                <option value="Memancing">
+                <option value="Melukis">
+                <option value="Bisnis Online">
+                <option value="Menjahit">
+                <option value="Bermain Game">
+                <option value="Kolam Terapi">
+                <option value="Makanan Sehat">
+                <option value="Koding">
+                <option value="Jalan-Jalan">
+                <option value="Melihat Film">
+                <option value="Baca Berita">
+                <option value="Belanja">
+                <option value="Belajar Bahasa Asing">
+                <option value="Bersepeda">
+                <option value="Berkemah">
+                <option value="Kemping">
+                <!-- Tambahkan opsi hobi lain sesuai kebutuhan -->
+            </datalist>
+
+            <input type="text" id="CitaCita" list="ListCitaCita" class="form-control mb-2" placeholder="Cita - Cita" />
+
+            <datalist id="ListCitaCita">
+                <option value="Ibu Rumah Tangga">
+                <option value="Petani">
+                <option value="Buruh">
+                <option value="Dokter">
+                <option value="Wiraswasta">
+                <option value="Pilot">
+                <option value="Astronot">
+                <option value="Pengusaha">
+                <option value="Seniman">
+                <option value="Atlet">
+                <option value="Musisi">
+                <option value="Penulis">
+                <option value="Ilmuwan">
+                <option value="Desainer">
+                <option value="Guru">
+                <option value="Polisi">
+                <option value="Pramugari">
+                <option value="Insinyur">
+                <option value="Koki">
+                <option value="Pekerja Sosial">
+                <option value="Programmer">
+                <option value="Akuntan">
+                <option value="Psikolog">
+                <option value="Reporter">
+                <option value="Pemadam Kebakaran">
+                <option value="Arkeolog">
+                <option value="Diplomat">
+                <option value="Peneliti">
+                <option value="Perawat">
+                <option value="Arsitek">
+                <option value="Pengacara">
+                <option value="Penjahit">
+            </datalist>
+            
+            <input type="text" id="KebutuhanKhusus" list="List" class="form-control mb-2" placeholder="Kebutuhan Khusus" />
+            <datalist id="List">
+                <option value="Tidak Ada">
+                <option value="Tuna Netra">
+                <option value="Tuna Rungu">
+                <option value="Tuna Grahita">
+                <option value="Tuna Daksa">
+                <option value="Tuna Laras">
+                <option value="Tuna Wicara">
+                <option value="Tuna Luwarbiasa">
+                <option value="Kesulitan Belajar">
+            </datalist>
+           
+        </div>
+        
+<!-- Teksbox untuk Nama Ayah (akan diisi secara otomatis) ----------------------------->
+        <div class="Biodata" id="BiodataAyah">
+            <label for="BiodataAyah">Biodata Ayah</label>
+            <input type="text" id="Ayah" class="form-control mb-2" placeholder="Nama Ayah" />
+            <input type="text" id="NIKAyah" class="form-control mb-2" placeholder="NIK Ayah" />
+            <select id="StatusAyah1" class="form-control mb-2" onchange="document.getElementById('StatusAyah').value = this.value;">
+                <option value="" disabled selected>Status Ayah</option>
+                <option value="Masih Hidup">Masih Hidup</option>
+                <option value="Sudah Meninggal">Sudah Meninggal</option>
+            </select>
+            <input type="hidden" id="StatusAyah" class="form-control mb-2" placeholder="Status Ayah" oninput="document.getElementById('StatusAyah1').value = (this.value === '') ? '' : this.value;">
+            
+        
+
+            <div class="TTL" id="TTL">
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="text" id="TempatLahirAyah" class="form-control mb-2" placeholder="Tempat Lahir" />
+        
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="date" id="TanggalLahirAyah" class="form-control mb-2" placeholder="Tanggal Lahir" />
+            </div>
+
+            <input type="text" id="PendidikanAyah" list="ListPendidikan" class="form-control mb-2" placeholder="Pendidikan Ayah" />
+            <datalist id="ListPendidikan">
+            <option value="Tidak Sekolah">
+            <option value="TK/RA">
+            <option value="SD/MI Sederajat">
+            <option value="SMP/MTs Sederajat">
+            <option value="SMA/SMK/MA Sederajat">
+            <option value="D1">
+            <option value="D2">
+            <option value="D3">
+            <option value="D4/S1">
+            <option value="S2">
+            <option value="S3">
+            </datalist>
+
+            <input type="text" id="PekerjaanAyah" list="ListCitaCita" class="form-control mb-2" placeholder="Pekerjaan Ayah" />
+            
+            <input type="tel" id="NoAyah" name="NoAyah" class="form-control mb-2" placeholder="Nomor HP Ayah" />
+
+            <input type="text" id="PenghasilanAyah" list="ListPenghasilan" class="form-control mb-2" placeholder="Penghasilan Ayah" />
+            <datalist id="ListPenghasilan">
+                <option value="Tidak Berpenghasilan">
+                <option value="<=500.000">
+                <option value="500.000 s/d 1.000.000">
+                <option value="1.000.000 s/d 2.000.000">
+                <option value="2.000.000 s/d 3.000.000">
+                <option value="3.000.000 s/d 4.000.000">
+                <option value="4.000.000 s/d 5.000.000">
+                <option value=">=5.000.000">
+            </datalist>
+        </div>
+        
+            
+<!-- Teksbox untuk Nama Ibu (akan diisi secara otomatis Sesuai NIK) ----------------------------->
+        <div class="Biodata" id="BiodataIbu">
+            <label for="BiodataIbu">Biodata Ibu</label>
+            <input type="text" id="Ibu" class="form-control mb-2" placeholder="Nama Ibu" />
+            <input type="text" id="NIKIbu" class="form-control mb-2" placeholder="NIK Ibu" />
+            <select id="StatusIbu1" class="form-control mb-2" onchange="document.getElementById('StatusIbu').value = this.value;">
+                <option value="" disabled selected>Status Ibu</option>
+                <option value="Masih Hidup">Masih Hidup</option>
+                <option value="Sudah Meninggal">Sudah Meninggal</option>
+            </select>
+            <input type="hidden" id="StatusIbu" class="form-control mb-2" placeholder="Status Ayah" oninput="document.getElementById('StatusIbu1').value = (this.value === '') ? '' : this.value;">
+            
+            <input type="text" id="StatusIbu" list="ListStatus" class="form-control mb-2" placeholder="Status Ibu" />
+
+            <div class="TTL" id="TTL">
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="text" id="TempatLahirIbu" class="form-control mb-2" placeholder="Tempat Lahir" />
+        
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="date" id="TanggalLahirIbu" class="form-control mb-2" placeholder="Tanggal Lahir" />
+            </div>
+
+            <input type="text" id="PendidikanIbu" list="ListPendidikan" class="form-control mb-2" placeholder="Pendidikan Ibu" />
+            <input type="text" id="PekerjaanIbu" list="ListCitaCita" class="form-control mb-2" placeholder="Pekerjaan Ibu" />
+            <input type="tel" id="NoIbu" name="NoIbu" class="form-control mb-2" placeholder="Nomor HP Ibu" />
+            <input type="text" id="PenghasilanIbu" list="ListPenghasilan" class="form-control mb-2" placeholder="Penghasilan Ibu" />
+
+        </div>
+        
+        <div class="Biodata" id="TinggalBersama1">
+            <select id="TinggalBersama2" class="form-control mb-2" onchange="updateTinggalBersama(this.value)">
+                <option value="" disabled selected>Tinggal Bersama</option>
+                <option value="Orang Tua">Orang Tua</option>
+                <option value="Wali">Wali</option>
+                <option value="Panti Asuhan">Panti Asuhan</option>
+                <option value="Lainnya">Lainnya</option>
+            </select>
+            
+            <input type="hidden" id="TinggalBersama" class="form-control mb-2" placeholder="Tinggal Bersama" oninput="document.getElementById('TinggalBersama2').value = (this.value === '') ? '' : this.value;">
+            
+        </div>
+<!-- Teksbox untuk Nama Wali (akan diisi secara otomatis Sesuai NIK) ----------------------------->
+        <div class="Biodata" id="BiodataWali">
+            <label for="BiodataWali">Biodata Wali</label>
+            <input type="text" id="Wali" class="form-control mb-2" placeholder="Nama Wali" />
+            <input type="text" id="NIKWali" name="Wali" class="form-control mb-2" placeholder="NIK Wali" />
+        
+            <input type="text" id="HubunganWali" name="Wali" list="ListHubungan" class="form-control mb-2" placeholder="Hubungan Dengan Wali" />
+            <datalist id="ListHubungan">
+                <option value="Kakek/Nenek">
+                <option value="Paman/Bibi">
+                <option value="Saudara">
+                <option value="Lainnya">
+            </datalist>
+            
+            <div class="TTL" id="TTL">
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="text" id="TempatLahirWali" class="form-control mb-2" placeholder="Tempat Lahir" />
+
+                <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
+                <input type="date" id="TanggalLahirWali" class="form-control mb-2" placeholder="Tanggal Lahir" />
+            </div>
+
+            <input type="text" id="PendidikanWali" list="ListPendidikan" class="form-control mb-2" placeholder="Pendidikan Wali" />
+            <input type="text" id="PekerjaanWali" list="ListCitaCita" class="form-control mb-2" placeholder="Pekerjaan Wali" />
+            <input type="tel" id="NoWali" class="form-control mb-2" placeholder="Nomor HP Wali" />
+            <input type="text" id="PenghasilanWali" list="ListPenghasilan" class="form-control mb-2" placeholder="Penghasilan Wali" />
+
+            
+        </div>     
+            
+<!-- Teksbox untuk Alamat (akan diisi secara otomatis Sesuai NIK) ----------------------------->
+        <div class="Biodata" id="Alamat">
+            <label for="BiodataWali">Alamat</label>
+
+            <div class="TTL" id="DusunRTRW">
+                <input type="text" id="Dusun" class="form-control mb-2" placeholder="Dusun" />
+                <input type="tel" id="RT" class="form-control mb-2" placeholder="RT" />
+                <input type="tel" id="RW" class="form-control mb-2" placeholder="RW" />
+            </div>
+
+            <input type="text" id="Desa" class="form-control mb-2" placeholder="Desa" />
+            <input type="text" id="Kecamatan" class="form-control mb-2" placeholder="Kecamatan" />
+            <input type="text" id="Kabupaten" class="form-control mb-2" placeholder="Kabupaten" />
+            <input type="text" id="Provinsi" class="form-control mb-2" placeholder="Provinsi" />
+            <input type="tel" id="KodePos" class="form-control mb-2" placeholder="Kode Pos" />
+            <input type="text" id="JarakKePesantren" list="ListJarak" class="form-control mb-2" placeholder="Jarak ke Pesantren" />
+            
+            <datalist id="ListJarak">
+                <option value="Dibawah 500 M">
+                <option value="Antara 500 M - 1 KM">
+                <option value="Antara 1 - 2 KM">
+                <option value="Antara 2 - 10 KM">
+                <option value="Antara 10 - 20 KM">
+                <option value="Antara 20 - 50 KM">
+                <option value="Di atas 50 KM">
+            </datalist>
+        </div> 
+            
+<!-- Teksbox untuk Madrasah (akan diisi secara otomatis Sesuai NIK) ----------------------------->
+<div class="Biodata" id="Madrasah1">
+    <select id="Madrasah1" class="form-control mb-2" onchange="updateMadrasah(this.value)">
+        <option value="" disabled selected>Pernah Sekolah Madrasah?</option>
+        <option value="Iya">Iya</option>
+        <option value="Tidak">Tidak</option>
+    </select>
+    <input type="hidden" id="Madrasah" class="form-control mb-2" placeholder="Pernah Sekolah Madrasah" />
+            
+</div>
+        <div class="Biodata" id="AsalMadrasah">
+
+            
+            <label for="AsalMadrasah">Asal Madrasah</label>
+
+            <input type="text" id="NamaMadrasah" class="form-control mb-2" placeholder="Nama Madrasah" />
+            <input type="text" id="AlamatMadrasah" class="form-control mb-2" placeholder="Alamat Madrasah" />
+            <input type="text" id="TahunLulusMadrasah" class="form-control mb-2" placeholder="Tahun Lulus Madrasah" />
+
+        </div> 
+            
+<!-- Teksbox untuk Sekolah formal (akan diisi secara otomatis Sesuai NIK) ----------------------------->
+        <div class="Biodata" id="AsalSekolah">
+            <label for="AsalMadrasah">Asal Sekolah</label>
+            <input type="text" id="SekolahFormal" list="ListPendidikan" class="form-control mb-2" placeholder="Sekolah Sebelumnya" />
+            
+            <input type="text" id="NamaSekolah" class="form-control mb-2" placeholder="Nama Sekolah" />
+            <input type="text" id="AlamatSekolah" class="form-control mb-2" placeholder="Alamat Sekolah" />
+            <input type="text" id="TahunLulusSekolah" class="form-control mb-2" placeholder="Tahun Lulus Sekolah" />
+
+            <input type="text" id="NPSN" class="form-control mb-2" placeholder="NPSN Sekolah Asal" />
+            <input type="text" id="NSM" class="form-control mb-2" placeholder="NSM" />
+
+            <input type="text" id="StatusPendaftar" list="ListPendaftar" class="form-control mb-2" placeholder="Status Pendaftar" />
+            <datalist id="ListPendaftar">
+                <option value="Murid Baru">
+                <option value="Pindah Sekolah">
+            </datalist>
+        </div> 
+            
+<!-- Teksbox untuk Kartu Bantuan (akan diisi secara otomatis Sesuai NIK) ----------------------------->
+        <div class="Biodata" id="KartuBantuan">
+
+            <label for="KantuBantuan">No Kartu Bantuan</label>
+
+            <input type="text" id="KIP" class="form-control mb-2" placeholder="KIP" />
+            <input type="text" id="PKH" class="form-control mb-2" placeholder="PKH" />
+            <input type="text" id="KKS" class="form-control mb-2" placeholder="KKS" />
+
+        </div> 
+
+<!-- Teksbox untuk Data Tambahan (akan diisi secara otomatis Sesuai NIK) ----------------------------->
+        <div class="Biodata" id="DataTambahan">
+
+            <label for="DataLainnya">Informasi Tambahan</label>
+
+            <input type="email" id="Email" class="form-control mb-2" placeholder="email" />
+            <input type="tel" id="NoTelpon" class="form-control mb-2" placeholder="No Telpon" />
+            <input type="text" id="Pekerjaan" list="ListCitaCita" class="form-control mb-2" placeholder="Pekerjaan" />
+            <input type="text" id="StatusNikah" list="ListNikah" class="form-control mb-2" placeholder="Status Nikah" />
+            <datalist id="ListNikah">
+                <option value="Sudah Menikah">
+                <option value="Belum Menikah">
+            </datalist>
+        </div> 
+
+<!-- Teksbox untuk Masuk Pesantren (akan diisi secara otomatis Sesuai NIK) ----------------------------->
+        <div class="Biodata" id="Rencana">
+
+            <label for="Rencana">Rencana di Pesantren</label>
+
+            <select id="TesKelas1" class="form-control mb-2" onchange="document.getElementById('TesKelas').value = this.value;">
+                <option value="" disabled selected>Tes di Kelas</option>
+                <option value="4 Ula">4 Ula</option>
+                <option value="5 Ula">5 Ula</option>
+                <option value="6 Ula">6 Ula</option>
+                <option value="1 Wustha">1 Wustha</option>
+                <option value="2 Wustha">2 Wustha</option>
+                <option value="3 Wustha">3 Wustha</option>
+                <option value="1 Ulya">1 Ulya</option>
+                <option value="Belum Tahu">Belum Tahu</option>
+            </select>
+            <input type="hidden" id="TesKelas" class="form-control mb-2" placeholder="Tes Kelas" />
+
+            <input type="text" id="Formal" class="form-control mb-2" placeholder="Formal" readonly/>
+            <input type="text" id="KelasFormal" list="Prodi" class="form-control mb-2" placeholder="Prodi" />
+            <datalist id="Prodi">
+                <option value="MPI">
+                <option value="ES">
+            </datalist>
+
+            <select id="StatusSantri2" class="form-control mb-2" onchange="document.getElementById('StatusSantri').value = this.value;">
+                <option value="" disabled selected>Status Santri</option>
+                <option value="Mukim / Dakhili">Mukim / Dakhili</option>
+                <option value="Khoriji / Nyulok">Khoriji / Nyulok</option>
+            </select>
+            
+            <input type="hidden" id="StatusSantri" class="form-control mb-2" placeholder="Status Santri" />
+            <div class="TTL" id="TTL">
+                <input type="text" id="Daerah" class="form-control mb-2" placeholder="Daerah" />
+                <input type="text" id="NoKamar" class="form-control mb-2" placeholder="No Kamar" />
+            </div>
+        </div> 
+
+
+
+        <br>
+        <div class="Biodata" id="BGSimpan">
+            <!-- Tombol Simpan -->
+            <button type="button" class="btn btn-success mb-2" onclick="onSimpan()" id="saveButton">
+                Simpan
+                <div id="loadingSpinner" class="hidden"></div>
+              </button>
+              <button type="button" class="btn btn-success mb-2" onclick="onEdit()" id="editButton">Edit</button>
+        </div>
+    </form>
+    
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+          <h2 class="text-center mb-4" id="Judul">Daftar Santri Baru</h3>
+          <h4 class="text-center mb-4" id="packageName"></h4>
+          <br>
+          <table
+            id="example"
+            class="table table-striped table-bordered mt-2 mb-2"
+            style="width: 100%"
+          ></table>
+          <br />
+          <br />
+          <p id="passingGrade"></p>
+        </div>
+      </div>
+    </div>
+
+    <style>
+
+    body {
+        background-image: url('https://i.ibb.co/ssfPyWM/Untitled-1.jpg');
+        background-repeat: repeat;
+    }
+    .cool-box {
+        background: linear-gradient(320deg, #000000, #0502b4);
+        border: 2px solid #ffffff;
+        border-radius: 10px; /* Sudut sudut kotak */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Bayangan */
+        padding: 20px; /* Ukuran padding yang benar */
+        width: 80%; /* Lebar kotak */
+        max-width: 300px;
+        margin: auto; /* Pusatkan kotak secara horizontal */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position:static;
+        overflow: hidden;
+        transition: max-height 1s ease-out, top 0.8s ease-in-out;
+        display:none;
+    }
+
+
+
+
+    .cool-box button {
+        color: #ffffff;
+        font-weight: bold;
+        background-color: rgb(31, 128, 19);
+        border-color: #f0f0f0;
+    }
+
+    .cool-box input {
+        font-weight: bold;
+        font-size:medium;
+    }
+    
+    .Biodata{
+        background-color: #ffffff;
+        align-items: center;
+        margin: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        max-width: 400px;
+        /*display: none;*/
+        transition: opacity 0.5s;
+    }
+
+    .Biodata label {
+        display: block; /* Untuk memastikan label memiliki lebar penuh */
+        margin-bottom: 10px; /* Sesuaikan nilai margin sesuai kebutuhan */
+        font-weight: bold;
+        text-align: center;
+        font-size:20px;
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: rgb(28, 16, 202);
+    }
+
+    #Melanjutkan{
+        max-width: 300px;
+        margin: auto;
+    }
+
+    .Biodata input {
+        margin-bottom: 5px;
+        margin-top: 5px;
+        background-color:rgb(255, 255, 255);
+    }
+
+    .Biodata select {
+        margin-bottom: 5px;
+        margin-top: 5px;
+        background-color:rgb(255, 255, 255);
+    }
+
+    #RT{
+        width: 50px;
+    }
+
+    #RW{
+        width: 50px;
+    }
+
+    .visible {
+        display: block;
+        opacity: 1;
+    }
+
+    .hidden {
+        display: none !important;
+        opacity: 0;
+    }
+
+    .TTL{
+        background-color: #dadada00;
+        display: flex;
+        gap: 5px;
+        justify-content: space-between; /* Untuk memberikan jarak antara elemen-elemen di dalam .ttl */
+        align-items: center;     
+    }
+    
+    #saveButton{
+        position: relative;
+        width: 100px;
+        height: 40px;
+        font-weight: bold;
+    }
+
+    #editButton{
+        background-color: rgb(47, 26, 236);
+        position: relative;
+        width: 100px;
+        height: 40px;
+        font-weight: bold;
+    }
+
+    #loadingSpinner {
+        position:absolute;
+        transform: translate(-50%, -50%);
+        
+        border: 4px solid rgba(145, 145, 145, 0.61);
+        border-radius: 50%;
+        border-top: 4px solid #ffffff;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        display:inline-block;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+
+
+    /* Gaya mode terang untuk semua dropdown */
+    select::-webkit-calendar-picker-indicator {
+        color: #0a0a0a; /* Warna teks pada mode gelap */
+        background-color: #f7f7f7; /* Warna latar belakang pada mode gelap */
+    }
+
+    /* Gaya mode gelap untuk semua dropdown */
+    @media (prefers-color-scheme: dark) {
+        select::-webkit-calendar-picker-indicator {
+            color: #fff; /* Warna teks pada mode gelap */
+            background-color: #242424; /* Warna latar belakang pada mode gelap */
+        }
+    }
+
+    #Judul{
+        font-weight: bold;
+    }
+
+    #example {
+        background-color: white; /* Memberikan latar belakang putih pada tabel */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan pada tabel */
+        
+    }
+
+        
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.2.0/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+    <!-- <script type="text/javascript" src="data.json"></script> -->
+    <script type="text/javascript">
+      // Fungsi untuk menangani perpindahan nilai NIK ke tombol
+      function validateNIK(input) {
+            // Menghapus karakter selain angka
+            input.value = input.value.replace(/\D/g, '');
+
+            // Memeriksa panjang teks
+            if (input.value.length === 16) {
+                input.style.border = '';
+
+                var daftarButton = document.querySelector(".btn-primary");
+                daftarButton.classList.remove("hidden");
+                daftarButton.classList.add("visible");
+
+            } else {
+                 // Menghapus warna border jika panjang teks mencukupi
+                input.style.border = '2px solid red';
+            }
+
+        }
+
+        function onNIKInput() {
+            var inputNIK = $("#NIK").val();
+
+            // Loop melalui setiap elemen dengan class "Biodata"
+            $(".Biodata input").each(function() {
+                var inputId = $(this).attr("id");  // Mendapatkan ID input saat ini
+                var matchingRow = $("#example").DataTable().rows().data().filter(function (value) {
+                    return value.NIK === inputNIK;
+                })[0];
+
+                if (matchingRow) {
+                    // Jika NIK ditemukan, isi teksbox atau input date dari input saat ini
+                    var formattedValue = matchingRow[inputId];
+                    if (inputId.startsWith("Tanggal") && $(this).attr("type") === "date") {
+                        // Formatted value harus dalam format "YYYY-MM-DD"
+                        formattedValue = formatDateForInputDate(matchingRow[inputId]);
+                    }
+
+                    $(this).val(formattedValue);
+                } else {
+                    // Jika NIK tidak ditemukan, kosongkan teksbox atau input date dari input saat ini
+                    $(this).val("");
+                }
+            });
+
+            var biodataElements = document.getElementsByClassName("Biodata");
+
+            for (var i = 0; i < biodataElements.length; i++) {
+                var biodata = biodataElements[i];
+                // Menambahkan class "visible" untuk menampilkan dengan animasi
+                biodata.classList.remove("hidden");
+                biodata.classList.add("visible");
+            }
+
+            var daftarButton = document.querySelector(".btn-primary");
+            // Menghapus class "visible" dan menambahkan class "hidden" pada tombol daftar
+            daftarButton.classList.remove("visible");
+            daftarButton.classList.add("hidden");
+
+            var saveButton = document.getElementById('saveButton');
+            saveButton.disabled = false;
+        }
+
+        function formatDateForInputDate(dateString) {
+            // Mengonversi string tanggal ke objek Date
+            var dateObject = new Date(dateString);
+            // Mengembalikan tanggal dalam format "YYYY-MM-DD"
+            return dateObject.toISOString().split('T')[0];
+        }
+
+        function updateTinggalBersama(selectedValue) {
+            document.getElementById('TinggalBersama').value = selectedValue;
+            var BiodataWali = document.getElementById('BiodataWali')
+
+
+            // Tambahkan kondisi untuk eksekusi kode berdasarkan nilai yang dipilih
+            if (selectedValue === "Wali") {
+                // Kode yang akan dijalankan jika dipilih "Orang Tua"
+                BiodataWali.classList.remove("hidden")
+                BiodataWali.classList.add("visible")
+            } else {
+                // Kode yang akan dijalankan jika dipilih "Wali"
+                BiodataWali.classList.remove("visible")
+                BiodataWali.classList.add("hidden")
+            }
+        }
+
+        function updateMadrasah(selectedValue) {
+            document.getElementById('Madrasah').value = selectedValue;
+            var MD = document.getElementById('AsalMadrasah')
+
+
+            // Tambahkan kondisi untuk eksekusi kode berdasarkan nilai yang dipilih
+            if (selectedValue === "Iya") {
+                // Kode yang akan dijalankan jika dipilih "Orang Tua"
+                MD.classList.remove("hidden")
+                MD.classList.add("visible")
+            } else {
+                // Kode yang akan dijalankan jika dipilih "Wali"
+                MD.classList.remove("visible")
+                MD.classList.add("hidden")
+            }
+        }
+
+        function updateFormal(selectedValue) {
+            document.getElementById('Formal').value = selectedValue;
+            document.getElementById('MelanjutkanKe')
+            var KelasFormal = document.getElementById('KelasFormal')
+
+
+            // Tambahkan kondisi untuk eksekusi kode berdasarkan nilai yang dipilih
+            if (selectedValue === "STAI") {
+                // Kode yang akan dijalankan jika dipilih "Orang Tua"
+                KelasFormal.classList.remove("hidden")
+                KelasFormal.classList.add("visible")
+            } else {
+                // Kode yang akan dijalankan jika dipilih "Wali"
+                KelasFormal.classList.remove("visible")
+                KelasFormal.classList.add("hidden")
+            }
+        }
+        
+        function onSimpan() {
+            // Menampilkan efek loading
+            var loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.classList.remove('hidden');
+            
+            
+            // Menonaktifkan tombol dan menghilangkan teks
+            var saveButton = document.getElementById('saveButton');
+            saveButton.disabled = true;
+            
+
+            // Mengambil nilai dari elemen input atau formulir di luar class "Biodata"
+            var NIK = document.getElementById("NIK").value;
+
+            // Mengumpulkan nilai dari elemen input dalam div dengan class "Biodata"
+            var formData = {};
+            var biodataElements = document.querySelectorAll('.Biodata input');
+
+            biodataElements.forEach(function(element) {
+                formData[element.id] = element.value;
+            });
+
+            // Menambahkan NIK ke dalam objek formData
+            formData["NIK"] = NIK;
+
+            // Membentuk header data untuk dikirimkan ke server
+            var headerData = Object.entries(formData).map(function(entry) {
+                return entry[0] + '=' + entry[1];
+            }).join('&');
+
+            // Menggunakan fungsi postJSON untuk mengirimkan data ke server
+            var response = postJSON(headerData);
+
+            // Tanggapi hasil respons sesuai kebutuhan Anda
+            console.log(response);
+
+            // Menyembunyikan efek loading setelah beberapa waktu (contoh: 2 detik)
+            setTimeout(function() {
+                loadingSpinner.classList.add('hidden');
+                // Mengaktifkan kembali tombol dan menampilkan pesan "Disimpan"
+                saveButton.disabled = true;
+            }, 2000);
+        }
+
+
+        function postJSON(header) {
+            // Deklarasikan variabel-variabel yang diperlukan
+            var url = "https://script.google.com/macros/s/AKfycbz9h4ub2g-h0xOC7DoqH92kuk4IEmcE63wn-ja069iMgCyRDSUxneHLrAfRg9uakqgPNA/exec";
+            var xmlhttp = new XMLHttpRequest();
+
+            // Coba mengirim permintaan POST
+            try {
+                xmlhttp.open("POST", url, false);
+                xmlhttp.setRequestHeader("User-Agent", "Mozilla/4.0 (compatible;MSIE 6.0; Windows NT 5.0)");
+                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xmlhttp.send(header);
+            } catch (err) {
+                return "Error: " + err.message;
+            }
+
+            // Periksa apakah pengiriman berhasil
+            if (xmlhttp.status !== 200) {
+                return "Error: " + xmlhttp.statusText;
+            } else {
+                // Jika berhasil, kembalikan respons teks
+                return xmlhttp.responseText;
+            }
+        }
+
+        $(document).ready(function () {
+            // Mengumpulkan nilai dari elemen input dalam div dengan class "Biodata"
+            var biodataElements = document.querySelectorAll('.Biodata input');
+            var formData = {};
+            biodataElements.forEach(function(element) {
+                formData[element.id] = element.value;
+            });
+
+            // Menambahkan kolom "NIK" di posisi pertama
+            var tableColumns = [
+                {
+                title: "NIK",
+                data: "NIK", // Pastikan ini sesuai dengan nama properti yang ada di sumber data
+                }
+            ];
+
+            biodataElements.forEach(function(element) {
+                // Menambahkan kolom DataTables secara dinamis
+                tableColumns.push({
+                title: element.id,
+                data: element.id,
+                });
+            });
+
+            // Inisialisasi DataTables
+            var table = $("#example").DataTable({
+                ajax: {
+                url: "https://script.google.com/macros/s/AKfycbz9h4ub2g-h0xOC7DoqH92kuk4IEmcE63wn-ja069iMgCyRDSUxneHLrAfRg9uakqgPNA/exec",
+                data: formData,  // Mengirim data ke server
+                },
+                columns: tableColumns, // Menggunakan kolom yang telah dibuat
+                rowId: "nim",
+                liveAjax: true,
+            });
+
+
+            // Menyembunyikan kolom kecuali "NIK" dan "Nama"
+            for (var i = 0; i < table.columns().count(); i++) {
+                var columnName = table.column(i).header().innerText.trim(); // Mengambil nama kolom
+                if (columnName !== "Formal" && columnName !== "Nama") {
+                table.column(i).visible(false);
+                }
+            }
+
+
+            // Menambahkan class "cool-box" setelah tabel selesai loading
+            table.on('init.dt', function () {
+                var cool = document.getElementById("KotakLogin");
+
+                // Menghapus class "visible" dan menambahkan class "hidden" pada tombol daftar
+                cool.classList.remove("hidden");
+                cool.classList.add("visible");
+
+            });
+
+        });
+
+    </script>
+  </body>
+</html>
+
