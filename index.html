@@ -25,13 +25,10 @@
       href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"
     />
 
-    <!-- link menambah icon save -->
-    <link 
-        rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
-        integrity="sha384-ezpkB+RFOoLHN/BCjG1ua8Ddz9LOiwlDtatpHXSXGO2AoF3M+I6U63UoVPSELYU1" 
-        crossorigin="anonymous"
-    />
+    <!-- Tag link untuk favicon -->
+    <link rel="icon" href="https://i.ibb.co/Qb3Z7h0/icon.png" type="image/x-icon" />
+    <!-- Tag meta untuk gambar ketika dibagikan di media sosial -->
+    <meta property="og:image" content="https://i.ibb.co/pvJg6tq/Pendaftaran.jpg" />
 
     <title>Pendaftaran Santri Baru</title>
   </head>
@@ -519,7 +516,7 @@
         margin-bottom: 15px;
         margin-top: 15px;
         max-width: 400px;
-        /*display: none;*/
+        display: none;
         transition: opacity 0.5s;
     }
 
@@ -754,7 +751,7 @@
 
         function updateFormal(selectedValue) {
             document.getElementById('Formal').value = selectedValue;
-            document.getElementById('MelanjutkanKe')
+            document.getElementById('MelanjutkanKe').value = selectedValue;
             var KelasFormal = document.getElementById('KelasFormal')
 
 
