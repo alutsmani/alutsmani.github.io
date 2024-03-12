@@ -43,7 +43,7 @@
             <input type="tel" id="NIK" class="form-control mb-2" placeholder="Masukkan NIK (16 karakter)" maxlength=16 oninput="validateNIK(this)" />
             <br>
             <!-- Tombol untuk mentrigger fungsi saat NIK diisi -->
-            <button type="button" class="btn btn-primary mb-2" id="Daftar" onclick="onNIKInput()">Daftar</button> 
+            <button type="button" class="btn btn-primary mb-2" id="Daftar" onclick="onNIKInput()">Isi Formulir</button> 
         </div>
         <br>
         <div class="Biodata" id="Melanjutkan">
@@ -444,7 +444,6 @@
                 Simpan
                 <div id="loadingSpinner" class="hidden"></div>
               </button>
-              <button type="button" class="btn btn-success mb-2" onclick="onEdit()" id="editButton">Edit</button>
         </div>
     </form>
     
@@ -504,6 +503,10 @@
     .cool-box input {
         font-weight: bold;
         font-size:medium;
+    }
+
+    #Daftar{
+        width: auto;
     }
     
     .Biodata{
@@ -580,13 +583,6 @@
         font-weight: bold;
     }
 
-    #editButton{
-        background-color: rgb(47, 26, 236);
-        position: relative;
-        width: 100px;
-        height: 40px;
-        font-weight: bold;
-    }
 
     #loadingSpinner {
         position:absolute;
@@ -649,18 +645,21 @@
       function validateNIK(input) {
             // Menghapus karakter selain angka
             input.value = input.value.replace(/\D/g, '');
+            var daftarButton = document.querySelector(".btn-primary");
 
             // Memeriksa panjang teks
             if (input.value.length === 16) {
                 input.style.border = '';
 
-                var daftarButton = document.querySelector(".btn-primary");
                 daftarButton.classList.remove("hidden");
                 daftarButton.classList.add("visible");
 
             } else {
                  // Menghapus warna border jika panjang teks mencukupi
                 input.style.border = '2px solid red';
+                
+                daftarButton.classList.remove("visible");
+                daftarButton.classList.add("hidden");
             }
 
         }
@@ -888,6 +887,11 @@
                 // Menghapus class "visible" dan menambahkan class "hidden" pada tombol daftar
                 cool.classList.remove("hidden");
                 cool.classList.add("visible");
+                
+                var daftarButton = document.querySelector(".btn-primary");
+                
+                daftarButton.classList.remove("visible");
+                daftarButton.classList.add("hidden");
 
             });
 
