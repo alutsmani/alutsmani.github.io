@@ -28,7 +28,7 @@
     <!-- Tag link untuk favicon -->
     <link rel="icon" href="https://i.ibb.co/Qb3Z7h0/icon.png" type="image/x-icon" />
     <!-- Tag meta untuk gambar ketika dibagikan di media sosial -->
-    <meta property="og:image" content="https://i.ibb.co/xLnrm86/Surat-Ijin.png" />
+    <meta property="og:image" content="https://i.ibb.co/8d3cVFb/BG.png" />
     
     <title>Pendaftaran Santri Baru</title>
   </head>
@@ -338,7 +338,7 @@
         <option value="Iya">Iya</option>
         <option value="Tidak">Tidak</option>
     </select>
-    <input type="hidden" id="Madrasah" class="form-control mb-2" placeholder="Pernah Sekolah Madrasah" />
+    <input type="hidden" id="Madrasah" class="form-control mb-2" placeholder="Pernah Sekolah Madrasah" oninput="document.getElementById('Madrasah1').value = (this.value === '') ? '' : this.value;">
             
 </div>
         <div class="Biodata" id="AsalMadrasah">
@@ -364,11 +364,13 @@
             <input type="text" id="NPSN" class="form-control mb-2" placeholder="NPSN Sekolah Asal" />
             <input type="text" id="NSM" class="form-control mb-2" placeholder="NSM" />
 
-            <input type="text" id="StatusPendaftar" list="ListPendaftar" class="form-control mb-2" placeholder="Status Pendaftar" />
-            <datalist id="ListPendaftar">
-                <option value="Murid Baru">
-                <option value="Pindah Sekolah">
-            </datalist>
+            <select id="StatusPendaftar1" class="form-control mb-2" onchange="updateStatusPendaftar(this.value)">
+                <option value="" disabled selected>Status Pendaftar</option>
+                <option value="Murid Baru">Murid Baru</option>
+                <option value="Pindah Sekolah">Pindah Sekolah</option>
+            </select>
+            <input type="hidden" id="StatusPendaftar" class="form-control mb-2" placeholder="Status Pendaftar" oninput="document.getElementById('StatusPendaftar1').value = (this.value === '') ? '' : this.value;">
+            
         </div> 
             
 <!-- Teksbox untuk Kartu Bantuan (akan diisi secara otomatis Sesuai NIK) ----------------------------->
@@ -471,6 +473,7 @@
     body {
         background-image: url('https://i.ibb.co/ssfPyWM/Untitled-1.jpg');
         background-repeat: repeat;
+        background-attachment:fixed;
     }
     .cool-box {
         background: linear-gradient(320deg, #000000, #0502b4);
@@ -760,6 +763,24 @@
                 KelasFormal.classList.remove("hidden")
                 KelasFormal.classList.add("visible")
                 KelasFormal.placeholder = "Prodi"
+            } else {
+                // Kode yang akan dijalankan jika dipilih "Wali"
+                KelasFormal.classList.remove("visible")
+                KelasFormal.classList.add("hidden")
+            }
+        }
+
+        function updateStatusPendaftar(selectedValue) {
+            document.getElementById('StatusPendaftar').value = selectedValue;
+            var KelasFormal = document.getElementById('KelasFormal')
+
+
+            // Tambahkan kondisi untuk eksekusi kode berdasarkan nilai yang dipilih
+            if (selectedValue === "Pindah Sekolah") {
+                // Kode yang akan dijalankan jika dipilih "Orang Tua"
+                KelasFormal.classList.remove("hidden")
+                KelasFormal.classList.add("visible")
+                KelasFormal.placeholder = "Kelas"
             } else {
                 // Kode yang akan dijalankan jika dipilih "Wali"
                 KelasFormal.classList.remove("visible")
