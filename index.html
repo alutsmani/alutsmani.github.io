@@ -65,7 +65,7 @@
                
             <label for="Biodata">Biodata Santri</label>
             <!-- Teksbox untuk Nama (akan diisi secara otomatis) -->
-            <input type="text" id="Nama" class="form-control mb-2" placeholder="Nama" />
+            <input type="text" id="Nama" class="form-control mb-2" placeholder="Nama" required/>
             <input type="tel" id="NoKK" class="form-control mb-2" placeholder="No KK (16 Karakter)" maxlength=16 />
             <input type="tel" id="NISN" class="form-control mb-2" placeholder="NISN (10 angka)"maxlength=10 />
             
@@ -417,7 +417,8 @@
             </select>
             <input type="hidden" id="TesKelas" class="form-control mb-2" placeholder="Tes Kelas" />
 
-            <input type="text" id="Formal" class="form-control mb-2" placeholder="Formal" readonly/>
+            <input type="text" id="Formal" class="form-control mb-2" placeholder="Formal" readonly onclick="switchToSelect()"/>
+            
             <input type="text" id="KelasFormal" list="Prodi" class="form-control mb-2" placeholder="Prodi" />
             <datalist id="Prodi">
                 <option value="MPI">
@@ -442,10 +443,8 @@
         <br>
         <div class="Biodata" id="BGSimpan">
             <!-- Tombol Simpan -->
-            <button type="button" class="btn btn-success mb-2" onclick="onSimpan()" id="saveButton">
-                Simpan
-                <div id="loadingSpinner" class="hidden"></div>
-              </button>
+            <button type="button" class="btn btn-success mb-2" onclick="onSimpan()" id="saveButton">Simpan</button>
+            <div id="loader" class="hidden"></div>
         </div>
     </form>
     
@@ -541,6 +540,10 @@
         margin: auto;
     }
 
+    #BiodataWali, #AsalMadrasah{
+        background-color: rgb(248, 230, 192);
+    }
+
     .Biodata input {
         margin-bottom: 5px;
         margin-top: 5px;
@@ -570,6 +573,7 @@
         display: none !important;
         opacity: 0;
     }
+    
 
     .TTL{
         background-color: #dadada00;
@@ -579,6 +583,8 @@
         align-items: center;     
     }
     
+    
+
     #saveButton{
         position: relative;
         width: 100px;
@@ -586,24 +592,21 @@
         font-weight: bold;
     }
 
-
-    #loadingSpinner {
-        position:absolute;
-        transform: translate(-50%, -50%);
-        
-        border: 4px solid rgba(145, 145, 145, 0.61);
-        border-radius: 50%;
-        border-top: 4px solid #ffffff;
-        width: 20px;
-        height: 20px;
-        animation: spin 1s linear infinite;
-        display:inline-block;
+    
+    /* HTML: <div class="loader"></div> */
+    #loader {
+    width: 100%;
+    height: 20px;
+    background: 
+        linear-gradient(#07971a 0 0) left -40px top 0/40px 20px,
+        linear-gradient(#ddd 0 0) center/100% 50%; 
+    background-repeat: no-repeat;
+    animation: l5 1s infinite linear;
+    }
+    @keyframes l5 {
+    100% {background-position: right -40px top 0,center}
     }
 
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
 
 
 
@@ -787,12 +790,18 @@
                 KelasFormal.classList.add("hidden")
             }
         }
-        
+
+        function switchToSelect() {
+            //document.getElementById('Formal').classList.add('hidden'); // Menghilangkan input teks
+            document.getElementById('Melanjutkan1').classList.remove('hidden'); // Menampilkan select
+            document.getElementById('Melanjutkan1').focus(); // Memindahkan fokus ke select
+        }
+
         function onSimpan() {
             // Menampilkan efek loading
-            var loadingSpinner = document.getElementById('loadingSpinner');
+            var loadingSpinner = document.getElementById('loader');
             loadingSpinner.classList.remove('hidden');
-            
+            setTimeout(function() {
             
             // Menonaktifkan tombol dan menghilangkan teks
             var saveButton = document.getElementById('saveButton');
@@ -810,6 +819,7 @@
                 formData[element.id] = element.value;
             });
 
+            
             // Menambahkan NIK ke dalam objek formData
             formData["NIK"] = NIK;
 
@@ -823,9 +833,11 @@
 
             // Tanggapi hasil respons sesuai kebutuhan Anda
             console.log(response);
+            
+
 
             // Menyembunyikan efek loading setelah beberapa waktu (contoh: 2 detik)
-            setTimeout(function() {
+            
                 loadingSpinner.classList.add('hidden');
                 // Mengaktifkan kembali tombol dan menampilkan pesan "Disimpan"
                 saveButton.disabled = true;
