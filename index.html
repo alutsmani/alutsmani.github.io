@@ -47,7 +47,7 @@
         </div>
         <br>
         <div class="Biodata" id="Melanjutkan">
-            <select id="Melanjutkan1" class="form-control mb-2" onchange="updateFormal(this.value)">
+            <select id="MelanjutkanKe" class="form-control mb-2" onchange="updateFormal(this.value)">
                 <option value="" disabled selected>Formal Mendaftar di ... </option>
                 <option value="MTs">MTs</option>
                 <option value="SMP">SMP</option>
@@ -55,7 +55,6 @@
                 <option value="STAI">STAI</option>
                 <option value="Tidak Sekolah">Tidak Sekolah</option>
             </select>
-            <input type="hidden" id="MelanjutkanKe" class="form-control mb-2" placeholder="Melanjutkan Ke" />
             
         </div>
         
@@ -83,12 +82,11 @@
                 <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
                 <input type="tel" id="JumlahSaudara" class="form-control mb-2" placeholder="Jumlah Saudara" />
             </div>
-            <select id="Gender1" class="form-control mb-2" onchange="document.getElementById('Gender').value = this.value;">
+            <select id="Gender" class="form-control mb-2" >
                 <option value="" disabled selected>Jenis Kelamin</option>
                 <option value="Laki-laki">Laki-laki</option>
                 <option value="Perempuan">Perempuan</option>
             </select>
-            <input type="hidden" id="Gender" class="form-control mb-2" placeholder="Jenis Kelamin" oninput="document.getElementById('Gender1').value = (this.value === '') ? '' : this.value;">
             
             <input type="text" id="Hobi" list="daftarHobi" class="form-control mb-2" placeholder="Hobi" />
 
@@ -182,14 +180,12 @@
             <label for="BiodataAyah">Biodata Ayah</label>
             <input type="text" id="Ayah" class="form-control mb-2" placeholder="Nama Ayah" />
             <input type="text" id="NIKAyah" class="form-control mb-2" placeholder="NIK Ayah" />
-            <select id="StatusAyah1" class="form-control mb-2" onchange="document.getElementById('StatusAyah').value = this.value;">
+            <select id="StatusAyah" class="form-control mb-2" >
                 <option value="" disabled selected>Status Ayah</option>
                 <option value="Masih Hidup">Masih Hidup</option>
                 <option value="Sudah Meninggal">Sudah Meninggal</option>
             </select>
-            <input type="hidden" id="StatusAyah" class="form-control mb-2" placeholder="Status Ayah" oninput="document.getElementById('StatusAyah1').value = (this.value === '') ? '' : this.value;">
             
-        
 
             <div class="TTL" id="TTL">
                 <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
@@ -237,15 +233,12 @@
             <label for="BiodataIbu">Biodata Ibu</label>
             <input type="text" id="Ibu" class="form-control mb-2" placeholder="Nama Ibu" />
             <input type="text" id="NIKIbu" class="form-control mb-2" placeholder="NIK Ibu" />
-            <select id="StatusIbu1" class="form-control mb-2" onchange="document.getElementById('StatusIbu').value = this.value;">
+            <select id="StatusIbu" class="form-control mb-2" >
                 <option value="" disabled selected>Status Ibu</option>
                 <option value="Masih Hidup">Masih Hidup</option>
                 <option value="Sudah Meninggal">Sudah Meninggal</option>
             </select>
-            <input type="hidden" id="StatusIbu" class="form-control mb-2" placeholder="Status Ayah" oninput="document.getElementById('StatusIbu1').value = (this.value === '') ? '' : this.value;">
             
-            <input type="text" id="StatusIbu" list="ListStatus" class="form-control mb-2" placeholder="Status Ibu" />
-
             <div class="TTL" id="TTL">
                 <!-- Teksbox untuk Tempat Lahir (akan diisi secara otomatis) -->
                 <input type="text" id="TempatLahirIbu" class="form-control mb-2" placeholder="Tempat Lahir" />
@@ -262,7 +255,7 @@
         </div>
         
         <div class="Biodata" id="TinggalBersama1">
-            <select id="TinggalBersama2" class="form-control mb-2" onchange="updateTinggalBersama(this.value)">
+            <select id="TinggalBersama" class="form-control mb-2" onchange="updateTinggalBersama(this.value)">
                 <option value="" disabled selected>Tinggal Bersama</option>
                 <option value="Orang Tua">Orang Tua</option>
                 <option value="Wali">Wali</option>
@@ -270,7 +263,6 @@
                 <option value="Lainnya">Lainnya</option>
             </select>
             
-            <input type="hidden" id="TinggalBersama" class="form-control mb-2" placeholder="Tinggal Bersama" oninput="document.getElementById('TinggalBersama2').value = (this.value === '') ? '' : this.value;">
             
         </div>
 <!-- Teksbox untuk Nama Wali (akan diisi secara otomatis Sesuai NIK) ----------------------------->
@@ -333,17 +325,15 @@
             
 <!-- Teksbox untuk Madrasah (akan diisi secara otomatis Sesuai NIK) ----------------------------->
 <div class="Biodata" id="Madrasah1">
-    <select id="Madrasah1" class="form-control mb-2" onchange="updateMadrasah(this.value)">
+    <select id="Madrasah" class="form-control mb-2" onchange="updateMadrasah(this.value)">
         <option value="" disabled selected>Pernah Sekolah Madrasah?</option>
         <option value="Iya">Iya</option>
         <option value="Tidak">Tidak</option>
     </select>
-    <input type="hidden" id="Madrasah" class="form-control mb-2" placeholder="Pernah Sekolah Madrasah" oninput="document.getElementById('Madrasah1').value = (this.value === '') ? '' : this.value;">
             
 </div>
         <div class="Biodata" id="AsalMadrasah">
 
-            
             <label for="AsalMadrasah">Asal Madrasah</label>
 
             <input type="text" id="NamaMadrasah" class="form-control mb-2" placeholder="Nama Madrasah" />
@@ -364,12 +354,11 @@
             <input type="text" id="NPSN" class="form-control mb-2" placeholder="NPSN Sekolah Asal" />
             <input type="text" id="NSM" class="form-control mb-2" placeholder="NSM" />
 
-            <select id="StatusPendaftar1" class="form-control mb-2" onchange="updateStatusPendaftar(this.value)">
+            <select id="StatusPendaftar" class="form-control mb-2" onchange="updateStatusPendaftar(this.value)">
                 <option value="" disabled selected>Status Pendaftar</option>
                 <option value="Murid Baru">Murid Baru</option>
                 <option value="Pindah Sekolah">Pindah Sekolah</option>
             </select>
-            <input type="hidden" id="StatusPendaftar" class="form-control mb-2" placeholder="Status Pendaftar" oninput="document.getElementById('StatusPendaftar1').value = (this.value === '') ? '' : this.value;">
             
         </div> 
             
@@ -385,7 +374,7 @@
         </div> 
 
 <!-- Teksbox untuk Data Tambahan (akan diisi secara otomatis Sesuai NIK) ----------------------------->
-        <div class="Biodata" id="DataTambahan">
+        <div class="Biodata" id="InformasiTambahan">
 
             <label for="DataLainnya">Informasi Tambahan</label>
 
@@ -404,7 +393,7 @@
 
             <label for="Rencana">Rencana di Pesantren</label>
 
-            <select id="TesKelas1" class="form-control mb-2" onchange="document.getElementById('TesKelas').value = this.value;">
+            <select id="TesKelas" class="form-control mb-2" >
                 <option value="" disabled selected>Tes di Kelas</option>
                 <option value="4 Ula">4 Ula</option>
                 <option value="5 Ula">5 Ula</option>
@@ -415,8 +404,7 @@
                 <option value="1 Ulya">1 Ulya</option>
                 <option value="Belum Tahu">Belum Tahu</option>
             </select>
-            <input type="hidden" id="TesKelas" class="form-control mb-2" placeholder="Tes Kelas" />
-
+            
             <input type="text" id="Formal" class="form-control mb-2" placeholder="Formal" readonly onclick="switchToSelect()"/>
             
             <input type="text" id="KelasFormal" list="Prodi" class="form-control mb-2" placeholder="Prodi" />
@@ -425,13 +413,12 @@
                 <option value="ES">
             </datalist>
 
-            <select id="StatusSantri2" class="form-control mb-2" onchange="document.getElementById('StatusSantri').value = this.value;">
+            <select id="StatusSantri" class="form-control mb-2" >
                 <option value="" disabled selected>Status Santri</option>
                 <option value="Mukim / Dakhili">Mukim / Dakhili</option>
                 <option value="Khoriji / Nyulok">Khoriji / Nyulok</option>
             </select>
             
-            <input type="hidden" id="StatusSantri" class="form-control mb-2" placeholder="Status Santri" />
             <div class="TTL" id="TTL">
                 <input type="text" id="Daerah" class="form-control mb-2" placeholder="Daerah" />
                 <input type="text" id="NoKamar" class="form-control mb-2" placeholder="No Kamar" />
@@ -540,7 +527,7 @@
         margin: auto;
     }
 
-    #BiodataWali, #AsalMadrasah{
+    #BiodataWali, #AsalMadrasah, #InformasiTambahan{
         background-color: rgb(248, 230, 192);
     }
 
@@ -674,7 +661,7 @@
             var inputNIK = $("#NIK").val();
 
             // Loop melalui setiap elemen dengan class "Biodata"
-            $(".Biodata input").each(function() {
+            $(".Biodata input, .Biodata select").each(function() {
                 var inputId = $(this).attr("id");  // Mendapatkan ID input saat ini
                 var matchingRow = $("#example").DataTable().rows().data().filter(function (value) {
                     return value.NIK === inputNIK;
@@ -710,7 +697,10 @@
             daftarButton.classList.add("hidden");
 
             var saveButton = document.getElementById('saveButton');
+            saveButton.textContent = "Simpan"
             saveButton.disabled = false;
+
+            
         }
 
         function formatDateForInputDate(dateString) {
@@ -721,7 +711,6 @@
         }
 
         function updateTinggalBersama(selectedValue) {
-            document.getElementById('TinggalBersama').value = selectedValue;
             var BiodataWali = document.getElementById('BiodataWali')
 
 
@@ -738,7 +727,6 @@
         }
 
         function updateMadrasah(selectedValue) {
-            document.getElementById('Madrasah').value = selectedValue;
             var MD = document.getElementById('AsalMadrasah')
 
 
@@ -756,9 +744,9 @@
 
         function updateFormal(selectedValue) {
             document.getElementById('Formal').value = selectedValue;
-            document.getElementById('MelanjutkanKe').value = selectedValue;
+            
             var KelasFormal = document.getElementById('KelasFormal')
-
+            var InformasiTambahan = document.getElementById('InformasiTambahan')
 
             // Tambahkan kondisi untuk eksekusi kode berdasarkan nilai yang dipilih
             if (selectedValue === "STAI") {
@@ -766,15 +754,20 @@
                 KelasFormal.classList.remove("hidden")
                 KelasFormal.classList.add("visible")
                 KelasFormal.placeholder = "Prodi"
+
+                InformasiTambahan.classList.remove("hidden")
+                InformasiTambahan.classList.add("visible")
             } else {
                 // Kode yang akan dijalankan jika dipilih "Wali"
                 KelasFormal.classList.remove("visible")
                 KelasFormal.classList.add("hidden")
+
+                InformasiTambahan.classList.remove("visible")
+                InformasiTambahan.classList.add("hidden")
             }
         }
 
         function updateStatusPendaftar(selectedValue) {
-            document.getElementById('StatusPendaftar').value = selectedValue;
             var KelasFormal = document.getElementById('KelasFormal')
 
 
@@ -793,27 +786,27 @@
 
         function switchToSelect() {
             //document.getElementById('Formal').classList.add('hidden'); // Menghilangkan input teks
-            document.getElementById('Melanjutkan1').classList.remove('hidden'); // Menampilkan select
-            document.getElementById('Melanjutkan1').focus(); // Memindahkan fokus ke select
+            document.getElementById('MelanjutkanKe').focus(); // Memindahkan fokus ke select
         }
 
         function onSimpan() {
             // Menampilkan efek loading
             var loadingSpinner = document.getElementById('loader');
             loadingSpinner.classList.remove('hidden');
-            setTimeout(function() {
+            
             
             // Menonaktifkan tombol dan menghilangkan teks
             var saveButton = document.getElementById('saveButton');
+            saveButton.textContent = "Menyimpan"
             saveButton.disabled = true;
             
-
+            setTimeout(function() {
             // Mengambil nilai dari elemen input atau formulir di luar class "Biodata"
             var NIK = document.getElementById("NIK").value;
 
             // Mengumpulkan nilai dari elemen input dalam div dengan class "Biodata"
             var formData = {};
-            var biodataElements = document.querySelectorAll('.Biodata input');
+            var biodataElements = document.querySelectorAll('.Biodata input, .Biodata select');
 
             biodataElements.forEach(function(element) {
                 formData[element.id] = element.value;
@@ -833,14 +826,14 @@
 
             // Tanggapi hasil respons sesuai kebutuhan Anda
             console.log(response);
+            alert("Data telah disimpan.");
             
-
-
             // Menyembunyikan efek loading setelah beberapa waktu (contoh: 2 detik)
             
                 loadingSpinner.classList.add('hidden');
                 // Mengaktifkan kembali tombol dan menampilkan pesan "Disimpan"
                 saveButton.disabled = true;
+                saveButton.textContent = "Tersimpan"
             }, 2000);
         }
 
@@ -871,7 +864,8 @@
 
         $(document).ready(function () {
             // Mengumpulkan nilai dari elemen input dalam div dengan class "Biodata"
-            var biodataElements = document.querySelectorAll('.Biodata input');
+            //var biodataElements = document.querySelectorAll('.Biodata input');
+            var biodataElements = document.querySelectorAll('.Biodata input, .Biodata select');
             var formData = {};
             biodataElements.forEach(function(element) {
                 formData[element.id] = element.value;
