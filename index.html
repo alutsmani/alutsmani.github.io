@@ -344,7 +344,7 @@
             
 <!-- Teksbox untuk Sekolah formal (akan diisi secara otomatis Sesuai NIK) ----------------------------->
         <div class="Biodata" id="AsalSekolah">
-            <label for="AsalMadrasah">Asal Sekolah</label>
+            <label for="AsalSekolah1">Asal Sekolah</label>
             <input type="text" id="SekolahFormal" list="ListPendidikan" class="form-control mb-2" placeholder="Sekolah Sebelumnya" />
             
             <input type="text" id="NamaSekolah" class="form-control mb-2" placeholder="Nama Sekolah" />
@@ -365,7 +365,7 @@
 <!-- Teksbox untuk Kartu Bantuan (akan diisi secara otomatis Sesuai NIK) ----------------------------->
         <div class="Biodata" id="KartuBantuan">
 
-            <label for="KantuBantuan">No Kartu Bantuan</label>
+            <label for="KantuBantuan1">No Kartu Bantuan</label>
 
             <input type="text" id="KIP" class="form-control mb-2" placeholder="KIP" />
             <input type="text" id="PKH" class="form-control mb-2" placeholder="PKH" />
@@ -658,6 +658,20 @@
         }
 
         function onNIKInput() {
+
+            var biodataElements = document.getElementsByClassName("Biodata");
+
+            for (var i = 0; i < biodataElements.length; i++) {
+                var biodata = biodataElements[i];
+                // Menambahkan class "visible" untuk menampilkan dengan animasi
+                biodata.classList.remove("hidden");
+                biodata.classList.add("visible");
+            }
+
+            var saveButton = document.getElementById('saveButton');
+            saveButton.textContent = "Simpan"
+            saveButton.disabled = false;
+
             var inputNIK = $("#NIK").val();
 
             // Loop melalui setiap elemen dengan class "Biodata"
@@ -682,24 +696,10 @@
                 }
             });
 
-            var biodataElements = document.getElementsByClassName("Biodata");
-
-            for (var i = 0; i < biodataElements.length; i++) {
-                var biodata = biodataElements[i];
-                // Menambahkan class "visible" untuk menampilkan dengan animasi
-                biodata.classList.remove("hidden");
-                biodata.classList.add("visible");
-            }
-
             var daftarButton = document.querySelector(".btn-primary");
             // Menghapus class "visible" dan menambahkan class "hidden" pada tombol daftar
             daftarButton.classList.remove("visible");
             daftarButton.classList.add("hidden");
-
-            var saveButton = document.getElementById('saveButton');
-            saveButton.textContent = "Simpan"
-            saveButton.disabled = false;
-
             
         }
 
@@ -826,7 +826,8 @@
 
             // Tanggapi hasil respons sesuai kebutuhan Anda
             console.log(response);
-            alert("Data telah disimpan.");
+            alert("Data telah disimpan!");
+            
             
             // Menyembunyikan efek loading setelah beberapa waktu (contoh: 2 detik)
             
@@ -834,7 +835,10 @@
                 // Mengaktifkan kembali tombol dan menampilkan pesan "Disimpan"
                 saveButton.disabled = true;
                 saveButton.textContent = "Tersimpan"
+                
             }, 2000);
+
+            
         }
 
 
