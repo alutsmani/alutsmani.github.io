@@ -65,7 +65,7 @@
             <label for="Biodata">Biodata Santri</label>
             <!-- Teksbox untuk Nama (akan diisi secara otomatis) -->
             <input type="text" id="Nama" class="form-control mb-2" placeholder="Nama" required/>
-            <input type="tel" id="NoKK" class="form-control mb-2" placeholder="No KK (16 Karakter)" maxlength=16 />
+            <input type="tel" id="NoKK" class="form-control mb-2" placeholder="Nomor KK (16 Karakter)" maxlength=16 />
             <input type="tel" id="NISN" class="form-control mb-2" placeholder="NISN (10 angka)"maxlength=10 />
             
             <div class="TTL" id="TTL">
@@ -179,7 +179,7 @@
         <div class="Biodata" id="BiodataAyah">
             <label for="BiodataAyah">Biodata Ayah</label>
             <input type="text" id="Ayah" class="form-control mb-2" placeholder="Nama Ayah" />
-            <input type="text" id="NIKAyah" class="form-control mb-2" placeholder="NIK Ayah" />
+            <input type="tel" id="NIKAyah" class="form-control mb-2" placeholder="NIK Ayah" />
             <select id="StatusAyah" class="form-control mb-2" >
                 <option value="" disabled selected>Status Ayah</option>
                 <option value="Masih Hidup">Masih Hidup</option>
@@ -232,7 +232,7 @@
         <div class="Biodata" id="BiodataIbu">
             <label for="BiodataIbu">Biodata Ibu</label>
             <input type="text" id="Ibu" class="form-control mb-2" placeholder="Nama Ibu" />
-            <input type="text" id="NIKIbu" class="form-control mb-2" placeholder="NIK Ibu" />
+            <input type="tel" id="NIKIbu" class="form-control mb-2" placeholder="NIK Ibu" />
             <select id="StatusIbu" class="form-control mb-2" >
                 <option value="" disabled selected>Status Ibu</option>
                 <option value="Masih Hidup">Masih Hidup</option>
@@ -269,7 +269,7 @@
         <div class="Biodata" id="BiodataWali">
             <label for="BiodataWali">Biodata Wali</label>
             <input type="text" id="Wali" class="form-control mb-2" placeholder="Nama Wali" />
-            <input type="text" id="NIKWali" name="Wali" class="form-control mb-2" placeholder="NIK Wali" />
+            <input type="tel" id="NIKWali" name="Wali" class="form-control mb-2" placeholder="NIK Wali" />
         
             <input type="text" id="HubunganWali" name="Wali" list="ListHubungan" class="form-control mb-2" placeholder="Hubungan Dengan Wali" />
             <datalist id="ListHubungan">
@@ -365,11 +365,11 @@
 <!-- Teksbox untuk Kartu Bantuan (akan diisi secara otomatis Sesuai NIK) ----------------------------->
         <div class="Biodata" id="KartuBantuan">
 
-            <label for="KantuBantuan1">No Kartu Bantuan</label>
+            <label for="KantuBantuan1">Nomor Kartu Bantuan</label>
 
-            <input type="text" id="KIP" class="form-control mb-2" placeholder="KIP" />
-            <input type="text" id="PKH" class="form-control mb-2" placeholder="PKH" />
-            <input type="text" id="KKS" class="form-control mb-2" placeholder="KKS" />
+            <input type="text" id="KIP" class="form-control mb-2" placeholder="Nomor KIP (Kartu Indonesia Pintar) 16 digit" />
+            <input type="text" id="PKH" class="form-control mb-2" placeholder="Nomor PKH (Program Keluarga Harapan) 12 digit" />
+            <input type="text" id="KKS" class="form-control mb-2" placeholder="Nomor KKS (Kartu Keluarga Sejahtera) 16 digit" />
 
         </div> 
 
@@ -393,18 +393,20 @@
 
             <label for="Rencana">Rencana di Pesantren</label>
 
-            <select id="TesKelas" class="form-control mb-2" >
-                <option value="" disabled selected>Tes di Kelas</option>
-                <option value="4 Ula">4 Ula</option>
-                <option value="5 Ula">5 Ula</option>
-                <option value="6 Ula">6 Ula</option>
-                <option value="1 Wustha">1 Wustha</option>
-                <option value="2 Wustha">2 Wustha</option>
-                <option value="3 Wustha">3 Wustha</option>
-                <option value="1 Ulya">1 Ulya</option>
-                <option value="Belum Tahu">Belum Tahu</option>
-            </select>
-            
+            <div class="TTL" id="TTLTes">
+                <select id="TesKelas" class="form-control mb-2" >
+                    <option value="" disabled selected>Tes di Kelas</option>
+                    <option value="4 Ula">4 Ula</option>
+                    <option value="5 Ula">5 Ula</option>
+                    <option value="6 Ula">6 Ula</option>
+                    <option value="1 Wustha">1 Wustha</option>
+                    <option value="2 Wustha">2 Wustha</option>
+                    <option value="3 Wustha">3 Wustha</option>
+                    <option value="1 Ulya">1 Ulya</option>
+                    <option value="Belum Tahu">Belum Tahu</option>
+                </select>
+            </div>
+
             <input type="text" id="Formal" class="form-control mb-2" placeholder="Formal" readonly onclick="switchToSelect()"/>
             
             <input type="text" id="KelasFormal" list="Prodi" class="form-control mb-2" placeholder="Prodi" />
@@ -419,7 +421,7 @@
                 <option value="Khoriji / Nyulok">Khoriji / Nyulok</option>
             </select>
             
-            <div class="TTL" id="TTL">
+            <div class="TTL" id="TTLTes">
                 <input type="text" id="Daerah" class="form-control mb-2" placeholder="Daerah" />
                 <input type="text" id="NoKamar" class="form-control mb-2" placeholder="No Kamar" />
             </div>
@@ -432,6 +434,11 @@
             <!-- Tombol Simpan -->
             <button type="button" class="btn btn-success mb-2" onclick="onSimpan()" id="saveButton">Simpan</button>
             <div id="loader" class="hidden"></div>
+            <br><br>
+            <div id="Keterangan3" class="hidden">
+                <p>Informasi lebih lanjut terkait biaya pendaftaran silahkan klik link ini <a href="https://sites.google.com/view/beddianmedia/santri-baru/biaya-santri-baru">Informasi biaya santri baru</a>.</p>
+                <p>Setelah tersimpan, Nama Santri akan muncul di bawah. Untuk melihat perubahan silahkan refresh ulang.</p>
+            </div>
         </div>
     </form>
     
@@ -439,7 +446,7 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-          <h2 class="text-center mb-4" id="Judul">Daftar Santri Baru</h3>
+          <h2 class="text-center mb-4" id="Judul">Santri Baru</h3>
           <h4 class="text-center mb-4" id="packageName"></h4>
           <br>
           <table
@@ -793,7 +800,7 @@
             // Menampilkan efek loading
             var loadingSpinner = document.getElementById('loader');
             loadingSpinner.classList.remove('hidden');
-            
+                        
             
             // Menonaktifkan tombol dan menghilangkan teks
             var saveButton = document.getElementById('saveButton');
@@ -835,8 +842,13 @@
                 // Mengaktifkan kembali tombol dan menampilkan pesan "Disimpan"
                 saveButton.disabled = true;
                 saveButton.textContent = "Tersimpan"
+
+                var Keterangan3 = document.getElementById('Keterangan3');
+                Keterangan3.classList.remove('hidden')
                 
             }, 2000);
+
+            
 
             
         }
