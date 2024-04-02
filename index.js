@@ -282,8 +282,8 @@ $(document).ready(function () {
     // Menyembunyikan kolom kecuali "NIK" dan "Nama"
     for (var i = 0; i < table.columns().count(); i++) {
         var columnName = table.column(i).header().innerText.trim(); // Mengambil nama kolom
-        if (columnName !== "Formal" && columnName !== "Nama" && columnName !== "NIK") {
-        //table.column(i).visible(false);
+        if (columnName !== "Formal" && columnName !== "Nama") {
+        table.column(i).visible(false);
         }
     }
 
