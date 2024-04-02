@@ -45,12 +45,13 @@ body {
 .input-wrapper, .select-wrapper {
     position:relative;
     
+    
 }
 
 .input-wrapper input, .select-wrapper select {
-    width: 100%;
     font-size: 16px;
     border: 1px solid #ccc;
+    
 }
 
 .input-wrapper label, .select-wrapper label {
@@ -120,6 +121,7 @@ body {
     margin-top: 5px;
     background-color:rgb(255, 255, 255);
     padding-left: 8px;
+    width: ;
 }
 
 .Biodata select {
