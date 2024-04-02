@@ -198,7 +198,6 @@ function onSimpan() {
     
         loadingSpinner.classList.add('hidden');
         // Mengaktifkan kembali tombol dan menampilkan pesan "Disimpan"
-        saveButton.disabled = true;
         saveButton.textContent = "Tersimpan"
 
         var Keterangan3 = document.getElementById('Keterangan3');
@@ -207,7 +206,7 @@ function onSimpan() {
     }, 2000);
 
     
-
+    
     
 }
 
@@ -242,9 +241,8 @@ function postJSON(header) {
     }
 }
 
-$(document).ready(function () {
+function onReload() {
     // Mengumpulkan nilai dari elemen input dalam div dengan class "Biodata"
-    //var biodataElements = document.querySelectorAll('.Biodata input');
     var biodataElements = document.querySelectorAll('.Biodata input, .Biodata select');
     var formData = {};
     biodataElements.forEach(function(element) {
@@ -254,24 +252,24 @@ $(document).ready(function () {
     // Menambahkan kolom "NIK" di posisi pertama
     var tableColumns = [
         {
-        title: "NIK",
-        data: "NIK", // Pastikan ini sesuai dengan nama properti yang ada di sumber data
+            title: "NIK",
+            data: "NIK", // Pastikan ini sesuai dengan nama properti yang ada di sumber data
         }
     ];
 
     biodataElements.forEach(function(element) {
         // Menambahkan kolom DataTables secara dinamis
         tableColumns.push({
-        title: element.id,
-        data: element.id,
+            title: element.id,
+            data: element.id,
         });
     });
 
     // Inisialisasi DataTables
     var table = $("#example").DataTable({
         ajax: {
-        url: "https://script.google.com/macros/s/AKfycbz9h4ub2g-h0xOC7DoqH92kuk4IEmcE63wn-ja069iMgCyRDSUxneHLrAfRg9uakqgPNA/exec",
-        data: formData,  // Mengirim data ke server
+            url: "https://script.google.com/macros/s/AKfycbz9h4ub2g-h0xOC7DoqH92kuk4IEmcE63wn-ja069iMgCyRDSUxneHLrAfRg9uakqgPNA/exec",
+            data: formData,  // Mengirim data ke server
         },
         columns: tableColumns, // Menggunakan kolom yang telah dibuat
         rowId: "nim",
@@ -283,7 +281,7 @@ $(document).ready(function () {
     for (var i = 0; i < table.columns().count(); i++) {
         var columnName = table.column(i).header().innerText.trim(); // Mengambil nama kolom
         if (columnName !== "Formal" && columnName !== "Nama") {
-        table.column(i).visible(false);
+            table.column(i).visible(false);
         }
     }
 
@@ -295,13 +293,18 @@ $(document).ready(function () {
         // Menghapus class "visible" dan menambahkan class "hidden" pada tombol daftar
         cool.classList.remove("hidden");
         cool.classList.add("visible");
-        
+
         var daftarButton = document.querySelector(".btn-primary");
-        
+
         daftarButton.classList.remove("visible");
         daftarButton.classList.add("hidden");
 
     });
+}
 
+$(document).ready(function () {
+    onReload();
 });
+
+
 
