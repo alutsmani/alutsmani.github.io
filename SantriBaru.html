@@ -41,7 +41,7 @@
     </div>    
     <br>
     <div class="bg-utama">
-        <h2>Santri Baru 1445 - 1446 H. / 2024 - 2025 M.</h2>
+        <h2>Santri Baru 1445/1446 H</h2>
 
         
         <div class="cool-box" id="KotakLogin">
@@ -382,29 +382,40 @@
     
 
         function handleSearch() {
-            const namaFilter = document.getElementById('nama').value.toLowerCase(); // Ambil teks nama dan ubah menjadi huruf kecil
-            const selectFormal = document.getElementById('cariFormal').value.toLowerCase(); // Ambil nilai dari select Formal
-            const selectDiniyah = document.getElementById('cariDiniyah').value.toLowerCase(); // Ambil nilai dari select Diniyah
+            const searchText = document.getElementById('nama').value.toLowerCase(); // Ambil teks nama dan ubah menjadi huruf kecil
             const containers = document.querySelectorAll('.container'); // Ambil semua kontainer
+            const filteredEntries = []; // Array untuk menyimpan entri yang sesuai dengan pencarian
+            let totalBayar = 0;
 
+            // Iterasi melalui setiap kontainer
             containers.forEach(container => {
-                const nama = container.querySelector('.nama').textContent.toLowerCase(); // Ambil teks nama dan ubah menjadi huruf kecil
-                const formalDetail = container.querySelector('.FormalDetail') ? container.querySelector('.FormalDetail').textContent.toLowerCase() : '';
-                const diniyahDetail = container.querySelector('.DiniyahDetail') ? container.querySelector('.DiniyahDetail').textContent.toLowerCase() : '';
+                const title = container.querySelector('h3');
+                const nama = title.querySelector('.nama').textContent.toLowerCase(); // Ambil teks nama dan ubah menjadi huruf kecil
+                
+                // Periksa apakah teks pencarian ada dalam teks nama
+                if (nama.includes(searchText)) {
+                    container.style.display = 'block'; // Tampilkan kontainer jika cocok dengan pencarian
+                    filteredEntries.push(container); // Tambahkan kontainer ke dalam array entri yang difilter
 
-                const matchesFilter = (
-                    (selectFormal === 'semua' || formalDetail.includes(selectFormal)) &&
-                    (selectDiniyah === 'semua' || diniyahDetail.includes(selectDiniyah))
-                );
-
-                const matchesSearch = nama.includes(namaFilter);
-
-                if (matchesFilter && matchesSearch) {
-                    container.style.display = 'block'; // Tampilkan kontainer jika semua kriteria sesuai
+                    // Ambil nilai pembayaran dari kontainer yang sesuai
+                    const BayarDetail = container.querySelector('.BayarDetail');
+                    if (BayarDetail) { // Periksa apakah elemen pembayaran ada
+                        // Tambahkan nilai pembayaran ke totalBayar
+                        totalBayar += parseFloat(BayarDetail.textContent);
+                    }
                 } else {
-                    container.style.display = 'none'; // Sembunyikan kontainer jika tidak cocok dengan kriteria pencarian
+                    container.style.display = 'none'; // Sembunyikan kontainer jika tidak cocok dengan pencarian
                 }
             });
+            
+            // Update label keterangan dengan informasi jumlah entri yang difilter
+            const keteranganLabel = document.getElementById('keterangan');
+            const totalEntries = containers.length;
+            const filteredCount = filteredEntries.length;
+            keteranganLabel.textContent = `Menampilkan (${filteredCount}) dari ${totalEntries} data keseluruhan`;
+
+            const keteranganBayar = document.getElementById('keteranganBayar');
+            keteranganBayar.textContent = `Total pembayaran: ${totalBayar}`;
         }
 
 
