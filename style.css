@@ -1,8 +1,9 @@
 
 body {
-    background-image: url('https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148953381.jpg?w=740&t=st=1715171877~exp=1715172477~hmac=628610c6251053f1f9ec774f077bc3bcb15cd5a4aabb4a13df5e136cabab6726');
+    background-image: url('Pattern.jpg');
     background-repeat: repeat;
     background-attachment:fixed;
+    background-size: cover;
 }
 .cool-box {
     background: linear-gradient(320deg, #000000, #0502b4);
