@@ -53,25 +53,30 @@
                 <option value="Ulya">Ulya</option>
                 <option value="">Belum Tes</option>
             </select> -->
-            <p>Filter Formal dan Status Murid</p>
-            <select id="cariFormal" name="cariFormal" class="form-control mb-2" onchange="handleSearch()">
-                <option value="">Semua</option>
-                <option value="MTs">MTs</option>
-                <option value="SMP">SMP</option>
-                <option value="SMAI">SMAI</option>
-                <option value="STAI">STAI</option>
-                <option value="Tidak Sekolah">Tidak Sekolah</option>
-            </select>
-            <select id="cariStatus" name="cariStatus" class="form-control mb-2" onchange="handleSearch()">
-                <option value="">Semua</option>
-                <option value="Murid Baru">Murid Baru</option>
-                <option value="Murid Mutasi">Murid Mutasi</option>
+            <select id="cariSantri" name="cariSantri" class="form-control mb-2" onchange="handleSearch()">
+                <option value="">Santri Baru & Santri Lama</option>
+                <option value="Santri Baru">Santri Baru</option>
+                <option value="Santri Mutasi">Santri Mutasi</option>
             </select>
 
-            <!--
-            <p>Dari tanggal - sampai</p>
-            <input type="date" id="dariTanggal" class="form-control mb-2" placeholder="Dari Tanggal">
-            <input type="date" id="sampaiTanggal" class="form-control mb-2" placeholder="Sampai Tanggal" >-->
+            <p>Filter Formal dan Status Murid</p>
+            <div class="TTL">
+                <select id="cariFormal" name="cariFormal" class="form-control mb-2" onchange="handleSearch()">
+                    <option value="">Semua</option>
+                    <option value="MTs">MTs</option>
+                    <option value="SMP">SMP</option>
+                    <option value="SMAI">SMAI</option>
+                    <option value="STAI">STAI</option>
+                    <option value="Tidak Sekolah">Tidak Sekolah</option>
+                </select>
+                <select id="cariStatus" name="cariStatus" class="form-control mb-2" onchange="handleSearch()">
+                    <option value="">Semua</option>
+                    <option value="Murid Baru">Murid Baru</option>
+                    <option value="Murid Mutasi">Murid Mutasi</option>
+                </select>
+            </div>
+
+           
             <p>Cari Nama</p>
             <input type="text" id="nama" class="form-control mb-2" placeholder="Nama" onchange="handleSearch()">
             <p id="keterangan"> keterangan </p>
@@ -186,14 +191,15 @@
             color: #000000;
         }
 
-        .formal {
+        .formal, .status {
             font-size: 12px
             
         }
-
-        .status {
-            font-size: 12px; /* Atur ukuran font IDS */
+        .santri {
+            font-size: 12px;
+            display: none;
         }
+        
 
         .input-container {
             margin-top: 10px;
@@ -392,6 +398,7 @@
     
 
         function handleSearch() {
+            const searchSantri = document.getElementById('cariSantri').value.toLowerCase();
             const searchFormal = document.getElementById('cariFormal').value.toLowerCase();
             const searchStatus = document.getElementById('cariStatus').value.toLowerCase();
             const searchText = document.getElementById('nama').value.toLowerCase(); // Ambil teks nama dan ubah menjadi huruf kecil
@@ -403,12 +410,14 @@
             // Iterasi melalui setiap kontainer
             containers.forEach(container => {
                 const title = container.querySelector('h3');
+                const santri = title.querySelector('.santri').textContent.toLowerCase();
                 const nama = title.querySelector('.nama').textContent.toLowerCase(); // Ambil teks nama dan ubah menjadi huruf kecil
                 const formal = title.querySelector('.formal').textContent.toLowerCase();
                 const status = title.querySelector('.status').textContent.toLowerCase();
                 
                 // Periksa apakah teks pencarian ada dalam teks nama
-                if (nama.includes(searchText) &&
+                if (santri.includes(searchSantri) &&
+                    nama.includes(searchText) &&
                     formal.includes(searchFormal) &&
                     status.includes(searchStatus)) {
 
@@ -467,18 +476,23 @@
                 namaSpan.classList.add('nama');
                 namaSpan.textContent = item.Nama;
         
-                const nikSpan = document.createElement('span');
-                nikSpan.classList.add('formal');
-                nikSpan.textContent = `${item.MelanjutkanKe}`;
+                const formalSpan = document.createElement('span');
+                formalSpan.classList.add('formal');
+                formalSpan.textContent = `${item.MelanjutkanKe}`;
         
-                const idsSpan = document.createElement('span');
-                idsSpan.classList.add('status');
-                idsSpan.textContent = `${item.StatusPendaftar}`;
+                const statusSpan = document.createElement('span');
+                statusSpan.classList.add('status');
+                statusSpan.textContent = `${item.StatusPendaftar}`;
         
+                const santriSpan = document.createElement('span');
+                santriSpan.classList.add('santri');
+                santriSpan.textContent = `${item.Status}`;
+
                 // Menambahkan span ke dalam judul
                 title.appendChild(namaSpan);
-                title.appendChild(nikSpan);
-                title.appendChild(idsSpan);
+                title.appendChild(formalSpan);
+                title.appendChild(statusSpan);
+                title.appendChild(santriSpan);
         
                 title.addEventListener('click', function() {
                 const details = container.querySelector('.details');
