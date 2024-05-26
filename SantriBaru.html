@@ -540,7 +540,18 @@
                 IDSRow.appendChild(IDSDetail);
                 tbody.appendChild(IDSRow);
 
-                //IDS
+                //Domisili
+                const DomRow = document.createElement('tr');
+                const DomLabel = document.createElement('td');
+                DomLabel.textContent = 'Domisili';
+                const DomDetail = document.createElement('td');
+                DomDetail.textContent = item.Daerah + "." + item.NoKamar;
+                DomRow.appendChild(DomLabel);
+                DomRow.appendChild(DomDetail);
+                tbody.appendChild(DomRow);
+
+
+                //TTL
                 const TTLRow = document.createElement('tr');
                 const TTLLabel = document.createElement('td');
                 TTLLabel.textContent = 'TTL';
