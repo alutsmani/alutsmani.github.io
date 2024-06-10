@@ -213,10 +213,11 @@ function onSimpan() {
 
 function postJSON(header) {
     // Link Santri Baru
-    var url = "https://script.google.com/macros/s/AKfycbz9h4ub2g-h0xOC7DoqH92kuk4IEmcE63wn-ja069iMgCyRDSUxneHLrAfRg9uakqgPNA/exec";
+    var url = "https://script.google.com/macros/s/AKfycbzjBnXMPn2Psl31XLSskRnyfPyzqqmb5vlo8iu4VGvfgOKNYnL8mjO_SEjAZQTDKu3eFg/exec";
 
+    //
     // Uji Coba untuk Data Santri Baru dan Pembayaran
-    //var url = "https://script.google.com/macros/s/AKfycbxTg0jP_YYS6feYyHe-qfmaQBF3rJuQX6hpHvflRX_5jYjRBooU6FxWJeG71gEQKujhYA/exec";
+    //var url = "";
 
 
 
@@ -262,13 +263,26 @@ function onReload() {
         tableColumns.push({
             title: element.id,
             data: element.id,
+            render: function(data, type, row) {
+                if (element.id === 'Nama' && type === 'display') {
+                    return toProperCase(data);
+                }
+                return data;
+            }
         });
     });
+
+    // Fungsi untuk mengubah string menjadi Proper Case
+    function toProperCase(str) {
+        return str.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    }
 
     // Inisialisasi DataTables
     var table = $("#example").DataTable({
         ajax: {
-            url: "https://script.google.com/macros/s/AKfycbz9h4ub2g-h0xOC7DoqH92kuk4IEmcE63wn-ja069iMgCyRDSUxneHLrAfRg9uakqgPNA/exec",
+            url: "https://script.google.com/macros/s/AKfycbzjBnXMPn2Psl31XLSskRnyfPyzqqmb5vlo8iu4VGvfgOKNYnL8mjO_SEjAZQTDKu3eFg/exec",
             data: formData,  // Mengirim data ke server
         },
         columns: tableColumns, // Menggunakan kolom yang telah dibuat
@@ -276,21 +290,19 @@ function onReload() {
         liveAjax: true,
     });
 
-
     // Menyembunyikan kolom kecuali "NIK" dan "Nama"
     for (var i = 0; i < table.columns().count(); i++) {
         var columnName = table.column(i).header().innerText.trim(); // Mengambil nama kolom
-        if (columnName !== "Formal" && columnName !== "Nama") {
+        if (columnName !== "Nama" && columnName !== "Formal") {
             table.column(i).visible(false);
         }
     }
-
 
     // Menambahkan class "cool-box" setelah tabel selesai loading
     table.on('init.dt', function () {
         var cool = document.getElementById("KotakLogin");
 
-        // Menghapus class "visible" dan menambahkan class "hidden" pada tombol daftar
+        // Menghapus class "hidden" dan menambahkan class "visible" pada kotak login
         cool.classList.remove("hidden");
         cool.classList.add("visible");
 
@@ -298,7 +310,6 @@ function onReload() {
 
         daftarButton.classList.remove("visible");
         daftarButton.classList.add("hidden");
-
     });
 }
 
