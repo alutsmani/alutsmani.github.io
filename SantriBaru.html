@@ -309,7 +309,21 @@
             width: 100px;
         }
 
-        
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .checkbox-wrapper label {
+            margin-left: 8px;
+        }
+
 
 
 
@@ -372,31 +386,6 @@
 
     <script>
         // Fungsi untuk mengirim data ke Google Sheets menggunakan metode doPost di Apps Script
-        function postJSON(header) {
-            // Link Santri Baru
-            var url = "https://script.google.com/macros/s/AKfycbzANtzKbwFWCvWd4UP_OrezPyzoVzosXONdax0JdncfvnTsGIbQIrZMAnKZWq62dfQGhw/exec";
-
-            var xmlhttp = new XMLHttpRequest();
-
-            // Coba mengirim permintaan POST
-            try {
-                xmlhttp.open("POST", url, false);
-                xmlhttp.setRequestHeader("User-Agent", "Mozilla/4.0 (compatible;MSIE 6.0; Windows NT 5.0)");
-                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xmlhttp.send(header);
-            } catch (err) {
-                return "Error: " + err.message;
-            }
-
-            // Periksa apakah pengiriman berhasil
-            if (xmlhttp.status !== 200) {
-                return "Error: " + xmlhttp.statusText;
-            } else {
-                // Jika berhasil, kembalikan respons teks
-                return xmlhttp.responseText;
-            }
-        }
-    
 
         function handleSearch() {
             const searchSantri = document.getElementById('cariSantri').value.toLowerCase();
@@ -461,245 +450,177 @@
         
 
 
-        // Fungsi untuk merender data ke dalam HTML
-        function renderData(data) {
-            const dataContainer = document.getElementById('dataContainer');
-            dataContainer.innerHTML = '';
-        
-            data.forEach(item => {
-                const container = document.createElement('div');
-                container.classList.add('container');
-        
-                const title = document.createElement('h3');
-        
-                // Membuat elemen span untuk mengatur ukuran font yang berbeda
-                const namaSpan = document.createElement('span');
-                namaSpan.classList.add('nama');
-                namaSpan.textContent = item.Nama;
-        
-                const formalSpan = document.createElement('span');
-                formalSpan.classList.add('formal');
-                formalSpan.textContent = `${item.MelanjutkanKe}`;
-        
-                const statusSpan = document.createElement('span');
-                statusSpan.classList.add('status');
-                statusSpan.textContent = `${item.StatusPendaftar}`;
-        
-                const santriSpan = document.createElement('span');
-                santriSpan.classList.add('santri');
-                santriSpan.textContent = `${item.Status}`;
+// Fungsi untuk merender data ke dalam HTML
+function renderData(data) {
+    const dataContainer = document.getElementById('dataContainer');
+    dataContainer.innerHTML = '';
 
-                // Menambahkan span ke dalam judul
-                title.appendChild(namaSpan);
-                title.appendChild(formalSpan);
-                title.appendChild(statusSpan);
-                title.appendChild(santriSpan);
-        
-                title.addEventListener('click', function() {
-                const details = container.querySelector('.details');
-                const inputContainer = container.querySelector('.input-container');
-                details.style.display = details.style.display === 'block' ? 'none' : 'block';
-                
-                });
-        
-                const details = document.createElement('div');
-                details.classList.add('details');
-        
-                // Buat tabel untuk menyusun data dalam dua kolom
-                const table = document.createElement('table');
-                const tbody = document.createElement('tbody');
-        
-                // Kolom pertama: label
-                const th1 = document.createElement('th');
-                th1.textContent = 'Informasi';
-                tbody.appendChild(th1);
-        
-                // Kolom kedua: isi
-                const th2 = document.createElement('th');
-                th2.textContent = '';
-                tbody.appendChild(th2);
-   
-                
-                //NIK
-                const NIKRow = document.createElement('tr');
-                const NIKLabel = document.createElement('td');
-                NIKLabel.textContent = 'NIK';
-                const NIKDetail = document.createElement('td');
-                NIKDetail.textContent = item.NIK;
-                NIKRow.appendChild(NIKLabel);
-                NIKRow.appendChild(NIKDetail);
-                tbody.appendChild(NIKRow);
+    data.forEach(item => {
+        const container = document.createElement('div');
+        container.classList.add('container');
 
-                //IDS
-                const IDSRow = document.createElement('tr');
-                const IDSLabel = document.createElement('td');
-                IDSLabel.textContent = 'IDS';
-                const IDSDetail = document.createElement('td');
-                IDSDetail.textContent = item.IDS;
-                IDSRow.appendChild(IDSLabel);
-                IDSRow.appendChild(IDSDetail);
-                tbody.appendChild(IDSRow);
+        const title = document.createElement('h3');
 
-                //Domisili
-                const DomRow = document.createElement('tr');
-                const DomLabel = document.createElement('td');
-                DomLabel.textContent = 'Domisili';
-                const DomDetail = document.createElement('td');
-                DomDetail.textContent = item.Daerah + "." + item.NoKamar;
-                DomRow.appendChild(DomLabel);
-                DomRow.appendChild(DomDetail);
-                tbody.appendChild(DomRow);
+        // Membuat elemen span untuk mengatur ukuran font yang berbeda
+        const namaSpan = document.createElement('span');
+        namaSpan.classList.add('nama');
+        namaSpan.textContent = item.Nama;
 
+        const formalSpan = document.createElement('span');
+        formalSpan.classList.add('formal');
+        formalSpan.textContent = `${item.MelanjutkanKe}`;
 
-                //TTL
-                const TTLRow = document.createElement('tr');
-                const TTLLabel = document.createElement('td');
-                TTLLabel.textContent = 'TTL';
-                const TTLDetail = document.createElement('td');
-                TTLDetail.textContent = item.TempatLahir + ", " + formatDate(item.TanggalLahir);
-                TTLRow.appendChild(TTLLabel);
-                TTLRow.appendChild(TTLDetail);
-                tbody.appendChild(TTLRow);
+        const statusSpan = document.createElement('span');
+        statusSpan.classList.add('status');
+        statusSpan.textContent = `${item.StatusPendaftar}`;
 
+        const santriSpan = document.createElement('span');
+        santriSpan.classList.add('santri');
+        santriSpan.textContent = `${item.Status}`;
 
-                //Diniyah
-                const DiniyahRow = document.createElement('tr');
-                const DiniyahLabel = document.createElement('td');
-                DiniyahLabel.textContent = 'Diniyah';
-                const DiniyahDetail = document.createElement('td');
-                DiniyahDetail.textContent = item.Diniyah;
-                DiniyahRow.appendChild(DiniyahLabel);
-                DiniyahRow.appendChild(DiniyahDetail);
-                tbody.appendChild(DiniyahRow);
+        // Menambahkan span ke dalam judul
+        title.appendChild(namaSpan);
+        title.appendChild(formalSpan);
+        title.appendChild(statusSpan);
+        title.appendChild(santriSpan);
 
-                //Melanjutkan Ke
-                const FormalRow = document.createElement('tr');
-                const FormalLabel = document.createElement('td');
-                FormalLabel.textContent = 'Formal';
-                const FormalDetail = document.createElement('td');
-                FormalDetail.textContent = item.Formal;
-                FormalRow.appendChild(FormalLabel);
-                FormalRow.appendChild(FormalDetail);
-                tbody.appendChild(FormalRow);
+        title.addEventListener('click', function() {
+            const details = container.querySelector('.details');
+            details.style.display = details.style.display === 'block' ? 'none' : 'block';
+        });
 
-           
-                // Data Ayah
-                const ayahRow = document.createElement('tr');
-                const ayahLabel = document.createElement('td');
-                ayahLabel.textContent = 'Ayah';
-                const ayahDetail = document.createElement('td');
-                ayahDetail.textContent = item.Ayah;
-                ayahRow.appendChild(ayahLabel);
-                ayahRow.appendChild(ayahDetail);
-                tbody.appendChild(ayahRow);
-        
-                // Data Ibu
-                const ibuRow = document.createElement('tr');
-                const ibuLabel = document.createElement('td');
-                ibuLabel.textContent = 'Ibu';
-                const ibuDetail = document.createElement('td');
-                ibuDetail.textContent = item.Ibu;
-                ibuRow.appendChild(ibuLabel);
-                ibuRow.appendChild(ibuDetail);
-                tbody.appendChild(ibuRow);
-        
-                // Data Alamat
-                const alamatRow = document.createElement('tr');
-                const alamatLabel = document.createElement('td');
-                alamatLabel.textContent = 'Alamat';
-                const alamatDetail = document.createElement('td');
-                alamatDetail.textContent = `${item.Dusun} ${item.RT}/${item.RW}, ${item.Desa}, ${item.Kecamatan}, ${item.Kabupaten}`;
-                alamatRow.appendChild(alamatLabel);
-                alamatRow.appendChild(alamatDetail);
-                tbody.appendChild(alamatRow);
-        
+        const details = document.createElement('div');
+        details.classList.add('details');
 
+        // Buat tabel untuk menyusun data dalam dua kolom
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
 
-                // Data Masehi
-                const MasehiRow = document.createElement('tr');
-                const MasehiLabel = document.createElement('td');
-                MasehiLabel.textContent = "Tanggal daftar";
-                const MasehiDetail = document.createElement('td');
-                MasehiDetail.textContent = item.Hijriyah + " H. - " + formatDate(item.Masehi) + " M.";
-                MasehiRow.appendChild(MasehiLabel);
-                MasehiRow.appendChild(MasehiDetail);
-                tbody.appendChild(MasehiRow);
+        // Kolom pertama: label
+        const th1 = document.createElement('th');
+        th1.textContent = 'Informasi';
+        tbody.appendChild(th1);
 
-                // Data Masehi
-                const AdminRow = document.createElement('tr');
-                const AdminLabel = document.createElement('td');
-                AdminLabel.textContent = "Admin";
-                const AdminDetail = document.createElement('td');
-                AdminDetail.textContent = item.PenanggungJawab;
-                AdminRow.appendChild(AdminLabel);
-                AdminRow.appendChild(AdminDetail);
-                tbody.appendChild(AdminRow);
+        // Kolom kedua: isi
+        const th2 = document.createElement('th');
+        th2.textContent = '';
+        tbody.appendChild(th2);
+
+        // Menambahkan baris data seperti sebelumnya
+        addDataRow(tbody, 'NIK', item.NIK);
+        addDataRow(tbody, 'IDS', item.IDS);
+        addDataRow(tbody, 'Domisili', item.Daerah + "." + item.NoKamar);
+        addDataRow(tbody, 'TTL', item.TempatLahir + ", " + formatDate(item.TanggalLahir));
+        addDataRow(tbody, 'Diniyah', item.Diniyah);
+        addDataRow(tbody, 'Formal', item.Formal);
+        addDataRow(tbody, 'Ayah', item.Ayah);
+        addDataRow(tbody, 'Ibu', item.Ibu);
+        addDataRow(tbody, 'Alamat', `${item.Dusun} ${item.RT}/${item.RW}, ${item.Desa}, ${item.Kecamatan}, ${item.Kabupaten}`);
+        addDataRow(tbody, 'Tanggal daftar', item.Hijriyah + " H. - " + formatDate(item.Masehi) + " M.");
+        addDataRow(tbody, 'Admin', item.PenanggungJawab);
+        addDataRow(tbody, 'Pembayaran', item.Total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+        addDataRow(tbody, 'Pesantren', item.Bayar_Pesantren.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+        addDataRow(tbody, 'Madrasah', item.Bayar_Madrasah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+        addDataRow(tbody, 'Formal', item.Bayar_Formal.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+        addDataRow(tbody, '-----------------------', '----------------------------------------------------');
+
+        table.appendChild(tbody);
+        details.appendChild(table);
+
+        // Menambahkan checkbox untuk KetNailulMurod, KetKalender, KetKartuSantri, dan KetTataTertib
+        const checkboxContainer = document.createElement('div');
+        checkboxContainer.classList.add('checkbox-container');
+
+        addCheckbox(checkboxContainer, 'KetNailulMurod', 'Nailul Murod', item.KetNailulMurod, item.NIK, item.NailulMurod);
+        addCheckbox(checkboxContainer, 'KetKalender', 'Kalender', item.KetKalender, item.NIK, item.Kalender);
+        addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.KartuSantri);
+        addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.TataTertib);
+
+        details.appendChild(checkboxContainer);
+
+        container.appendChild(title);
+        container.appendChild(details);
+        dataContainer.appendChild(container);
+    });
+
+    const loader = document.getElementById('loader');
+    loader.classList.remove('visible');
+    loader.classList.add('hidden');
+}
+
+// Fungsi tambahan untuk menambahkan baris data ke dalam tabel
+function addDataRow(tbody, label, detail) {
+    const row = document.createElement('tr');
+    const labelCell = document.createElement('td');
+    labelCell.textContent = label;
+    const detailCell = document.createElement('td');
+    detailCell.textContent = detail;
+    row.appendChild(labelCell);
+    row.appendChild(detailCell);
+    tbody.appendChild(row);
+}
+
+// Fungsi tambahan untuk menambahkan checkbox
+function addCheckbox(container, name, opsi, checked, nik, labelValue) {
+    const checkboxWrapper = document.createElement('div');
+    checkboxWrapper.classList.add('checkbox-wrapper');
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = checked;
+    checkbox.addEventListener('change', function() {
+        postCheckboxStatus(nik, name, checkbox.checked);
+    });
+
+    const label = document.createElement('label');
+    label.textContent = `${opsi} : ${labelValue}`;
+
+    checkboxWrapper.appendChild(checkbox);
+    checkboxWrapper.appendChild(label);
+    container.appendChild(checkboxWrapper);
+}
+
+// Fungsi untuk mengirim status checkbox ke Google Sheets
+function postCheckboxStatus(nik, name, status) {
+    const data = `NIK=${encodeURIComponent(nik)}&${name}=${encodeURIComponent(status)}`;
+    const response = postJSON(data);
+    console.log('Response:', response);
+}
+
+// Fungsi untuk memformat tanggal
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('id-ID', options);
+}
+
+// Fungsi untuk mengirimkan permintaan POST
+function postJSON(header) {
+    // Link Santri Baru
+    var url = "https://script.google.com/macros/s/AKfycbzANtzKbwFWCvWd4UP_OrezPyzoVzosXONdax0JdncfvnTsGIbQIrZMAnKZWq62dfQGhw/exec";
+
+    var xmlhttp = new XMLHttpRequest();
+
+    // Coba mengirim permintaan POST
+    try {
+        xmlhttp.open("POST", url, false);
+        xmlhttp.setRequestHeader("User-Agent", "Mozilla/4.0 (compatible;MSIE 6.0; Windows NT 5.0)");
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.send(header);
+    } catch (err) {
+        return "Error: " + err.message;
+    }
+
+    // Periksa apakah pengiriman berhasil
+    if (xmlhttp.status !== 200) {
+        return "Error: " + xmlhttp.statusText;
+    } else {
+        // Jika berhasil, kembalikan respons teks
+        return xmlhttp.responseText;
+    }
+}
 
 
-                // Data Pembayaran
-                const BayarRow = document.createElement('tr');
-                const BayarLabel = document.createElement('td');
-                BayarLabel.textContent = "Pembayaran";
-                const BayarDetail = document.createElement('td');
-                BayarDetail.textContent = item.Total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                BayarRow.appendChild(BayarLabel);
-                BayarRow.appendChild(BayarDetail);
-                tbody.appendChild(BayarRow);
 
-                // Data Pembayaran
-                const PesRow = document.createElement('tr');
-                const PesLabel = document.createElement('td');
-                PesLabel.textContent = "Pesantren";
-                const PesDetail = document.createElement('td');
-                PesDetail.textContent = item.Bayar_Pesantren.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                PesRow.appendChild(PesLabel);
-                PesRow.appendChild(PesDetail);
-                tbody.appendChild(PesRow);
-
-                // Data Pembayaran
-                const MDRow = document.createElement('tr');
-                const MDLabel = document.createElement('td');
-                MDLabel.textContent = "Madrasah";
-                const MDDetail = document.createElement('td');
-                MDDetail.textContent = item.Bayar_Madrasah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                MDRow.appendChild(MDLabel);
-                MDRow.appendChild(MDDetail);
-                tbody.appendChild(MDRow);
-
-                // Data Pembayaran
-                const FMRow = document.createElement('tr');
-                const FMLabel = document.createElement('td');
-                FMLabel.textContent = "Formal";
-                const FMDetail = document.createElement('td');
-                FMDetail.textContent = item.Bayar_Formal.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                FMRow.appendChild(FMLabel);
-                FMRow.appendChild(FMDetail);
-                tbody.appendChild(FMRow);
-
-                // Data Pembayaran
-                const LainRow = document.createElement('tr');
-                const LainLabel = document.createElement('td');
-                LainLabel.textContent = "-----------------------";
-                const LainDetail = document.createElement('td');
-                LainDetail.textContent = "----------------------------------------------------";
-                LainRow.appendChild(LainLabel);
-                LainRow.appendChild(LainDetail);
-                tbody.appendChild(LainRow);
-
-                table.appendChild(tbody);
-                details.appendChild(table);
-        
-                container.appendChild(title);
-                container.appendChild(details);
-                dataContainer.appendChild(container);
-
-    
-            });
-            const loader = document.getElementById('loader');
-            loader.classList.remove('visible');
-            loader.classList.add('hidden');
-        }
-    
     
         // Memanggil fungsi loadData() saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
