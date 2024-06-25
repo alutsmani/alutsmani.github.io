@@ -368,6 +368,7 @@
 }
 
 .spinner {
+    position: relative; /* Menjadikan posisi relatif untuk child */
     border: 4px solid rgba(255, 255, 255, 0.3);
     border-top: 4px solid white;
     border-radius: 50%;
@@ -375,6 +376,16 @@
     height: 24px;
     animation: spin 1s linear infinite;
 }
+
+#loading-count {
+    position: absolute; /* Menjadikan posisi absolut untuk #loading-count */
+    top: 50%; /* Posisi di tengah vertikal */
+    left: 50%; /* Posisi di tengah horizontal */
+    transform: translate(-50%, -50%); /* Menggeser agar tepat berada di tengah */
+    font-size: 10px; /* Atur ukuran font sesuai kebutuhan */
+    color: white; /* Warna teks putih */
+}
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
