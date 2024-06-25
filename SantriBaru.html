@@ -585,6 +585,8 @@ function renderData(data) {
         addCheckbox(checkboxContainer, 'KetKalender', 'Kalender', item.KetKalender, item.NIK, item.IDS, item.Kalender);
         addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.IDS, item.TataTertib);
         addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.IDS, item.KartuSantri);
+        addCheckbox(checkboxContainer, 'KetSeragamPondok', 'Sarung / Gamis', item.KetSeragamPondok, item.NIK, item.IDS, item.SeragamPondok);
+        
 
         details.appendChild(checkboxContainer);
 
@@ -650,7 +652,7 @@ function queueCheckboxStatus(nik, ids, name, status) {
     debounceTimeouts[`${nik}-${ids}`] = setTimeout(() => {
         processCheckboxQueue(nik, ids);
         delete debounceTimeouts[`${nik}-${ids}`];
-    }, 2000);
+    }, 1000);
 }
 
 function processCheckboxQueue(nik, ids) {
