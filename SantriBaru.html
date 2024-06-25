@@ -40,9 +40,15 @@
         <img src="Kop.png" alt="icon" width="120" height="120">
     </div>    
     <br>
+    <div id="loading-indicator" class="loading-indicator hidden">
+        <div class="spinner"></div>
+        <div id="loading-count">0</div>
+    </div>
     <div class="bg-utama">
         <h2>Santri Baru 1445/1446 H</h2>
-
+        
+        
+        
         
         <div class="cool-box" id="KotakLogin">
             <!--<select id="cariDiniyah" name="cariDiniyah" class="form-control mb-2" onchange="handleSearch()">
@@ -344,6 +350,53 @@
         }
 
 
+        .loading-indicator {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    z-index: 1000;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
         /* Gaya mode terang untuk semua dropdown */
         select::-webkit-calendar-picker-indicator {
             color: #0a0a0a; /* Warna teks pada mode gelap */
@@ -528,10 +581,10 @@
                 const checkboxContainer = document.createElement('div');
                 checkboxContainer.classList.add('checkbox-container');
 
-                addCheckbox(checkboxContainer, 'KetNailulMurod', 'Nailul Murod', item.KetNailulMurod, item.NIK, item.NailulMurod);
-                addCheckbox(checkboxContainer, 'KetKalender', 'Kalender', item.KetKalender, item.NIK, item.Kalender);
-                addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.TataTertib);
-                addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.KartuSantri);
+                addCheckbox(checkboxContainer, 'KetNailulMurod', 'Nailul Murod', item.KetNailulMurod, item.NIK, item.IDS, item.NailulMurod);
+                addCheckbox(checkboxContainer, 'KetKalender', 'Kalender', item.KetKalender, item.NIK, item.IDS, item.Kalender);
+                addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.IDS, item.TataTertib);
+                addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.IDS, item.KartuSantri);
 
                 details.appendChild(checkboxContainer);
 
@@ -557,10 +610,10 @@
             tbody.appendChild(row);
         }
 
-
         let checkboxUpdateQueue = [];
+        let debounceTimeout = null;
 
-        function addCheckbox(container, name, opsi, checked, nik, labelValue) {
+        function addCheckbox(container, name, opsi, checked, nik, ids, labelValue) {
             const checkboxWrapper = document.createElement('div');
             checkboxWrapper.classList.add('checkbox-wrapper');
 
@@ -568,7 +621,7 @@
             checkbox.type = 'checkbox';
             checkbox.checked = checked;
             checkbox.addEventListener('change', function() {
-                queueCheckboxStatus(nik, name, checkbox.checked);
+                queueCheckboxStatus(nik, ids, name, checkbox.checked);
             });
 
             const label = document.createElement('label');
@@ -579,33 +632,42 @@
             container.appendChild(checkboxWrapper);
         }
 
-        function queueCheckboxStatus(nik, name, status) {
-            checkboxUpdateQueue.push({ nik, name, status });
-
-            if (checkboxUpdateQueue.length === 1) {
-                processCheckboxQueue();
+        function queueCheckboxStatus(nik, ids, name, status) {
+            const existingIndex = checkboxUpdateQueue.findIndex(item => item.nik === nik && item.ids === ids && item.name === name);
+            if (existingIndex >= 0) {
+                checkboxUpdateQueue[existingIndex].status = status;
+            } else {
+                checkboxUpdateQueue.push({ nik, ids, name, status });
             }
+
+            if (debounceTimeout) {
+                clearTimeout(debounceTimeout);
+            }
+
+            debounceTimeout = setTimeout(() => {
+                processCheckboxQueue();
+            }, 2000);
+
+            updateLoadingIndicator();
         }
 
         function processCheckboxQueue() {
             if (checkboxUpdateQueue.length > 0) {
-                const { nik, name, status } = checkboxUpdateQueue[0];
-                postCheckboxStatus(nik, name, status).then(() => {
-                    checkboxUpdateQueue.shift();
-                    processCheckboxQueue();
+                const updates = checkboxUpdateQueue.slice();
+                checkboxUpdateQueue = [];
+
+                updates.forEach(update => {
+                    postCheckboxStatus(update.nik, update.ids, update.name, update.status).then(() => {
+                        decrementLoadingCount();
+                    });
                 });
             }
         }
 
-        function postCheckboxStatus(nik, name, status) {
-            const data = `NIK=${encodeURIComponent(nik)}&${name}=${encodeURIComponent(status)}`;
+        function postCheckboxStatus(nik, ids, name, status) {
+            const data = `NIK=${encodeURIComponent(nik)}&IDS=${encodeURIComponent(ids)}&${name}=${encodeURIComponent(status)}`;
             return postJSON(data);
         }
-
-
-    
-
-    
 
         // Fungsi untuk memformat tanggal
         function formatDate(dateString) {
@@ -615,7 +677,7 @@
 
         // Fungsi untuk mengirimkan permintaan POST
         async function postJSON(header) {
-            const url = "https://script.google.com/macros/s/AKfycbzANtzKbwFWCvWd4UP_OrezPyzoVzosXONdax0JdncfvnTsGIbQIrZMAnKZWq62dfQGhw/exec";
+            const url = "https://script.google.com/macros/s/AKfycbzANtzKbwFWCvWd4UP_OrezPyzoVzosXONdax0JdncfvnTsGIbQIrZMAnKZWq62dfQGhw/exec?action=UpdateData";
             try {
                 const response = await fetch(url, {
                     method: 'POST',
@@ -635,27 +697,41 @@
             }
         }
 
-
-    
         // Memanggil fungsi loadData() saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
         });
 
-        function formatDate(inputDate) {
-            // Membuat objek Date dari string tanggal
-            const dateObject = new Date(inputDate);
+        // Fungsi untuk mengupdate indikator loading
+        function updateLoadingIndicator() {
+            const indicator = document.getElementById('loading-indicator');
+            const count = document.getElementById('loading-count');
+            const pendingCount = checkboxUpdateQueue.length;
 
-            // Mendapatkan tanggal, bulan, dan tahun dari objek Date
-            const day = dateObject.getDate().toString().padStart(2, '0'); // Mengonversi tanggal menjadi dua digit dengan fungsi padStart
-            const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // Bulan dimulai dari 0, jadi harus ditambah 1
-            const year = dateObject.getFullYear();
-
-            // Menggabungkan tanggal, bulan, dan tahun dalam format 'DD/MM/YYYY'
-            const formattedDate = `${day}/${month}/${year}`;
-            
-            return formattedDate;
+            if (pendingCount > 0) {
+                indicator.classList.remove('hidden');
+                count.textContent = pendingCount;
+            } else {
+                indicator.classList.add('hidden');
+            }
         }
+
+        // Fungsi untuk mengurangi hitungan loading
+        function decrementLoadingCount() {
+            const count = document.getElementById('loading-count');
+            let currentCount = parseInt(count.textContent, 10);
+
+            if (currentCount > 0) {
+                currentCount -= 1;
+                count.textContent = currentCount;
+
+                if (currentCount === 0) {
+                    const indicator = document.getElementById('loading-indicator');
+                    indicator.classList.add('hidden');
+                }
+            }
+        }
+
     </script>
 
   </body>
