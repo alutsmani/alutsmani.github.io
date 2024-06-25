@@ -51,24 +51,21 @@
         
         
         <div class="cool-box" id="KotakLogin">
-            <!--<select id="cariDiniyah" name="cariDiniyah" class="form-control mb-2" onchange="handleSearch()">
-                <option value="Semua">Semua</option>
-                <option value="Isti'dadiyah">Isti'dadiyah</option>
-                <option value="Ula">Ula</option>
-                <option value="Wustha">Wustha</option>
-                <option value="Ulya">Ulya</option>
-                <option value="">Belum Tes</option>
-            </select> -->
             <select id="cariSantri" name="cariSantri" class="form-control mb-2" onchange="handleSearch()">
                 <option value="">Santri Baru & Santri Lama</option>
                 <option value="Santri Baru">Santri Baru</option>
                 <option value="Santri Lama">Santri Lama</option>
             </select>
+            <select id="cariBN" name="cariBN" class="form-control mb-2" onchange="handleSearch()">
+                <option value="">Banin & Banat</option>
+                <option value="1">Banin</option>
+                <option value="2">Banat</option>
+            </select>
 
             <p>Filter Formal dan Status Murid</p>
             <div class="TTL">
                 <select id="cariFormal" name="cariFormal" class="form-control mb-2" onchange="handleSearch()">
-                    <option value="">Semua</option>
+                    <option value="">Formal</option>
                     <option value="MTs">MTs</option>
                     <option value="SMP">SMP</option>
                     <option value="SMAI">SMAI</option>
@@ -76,13 +73,40 @@
                     <option value="Tidak Sekolah">Tidak Sekolah</option>
                 </select>
                 <select id="cariStatus" name="cariStatus" class="form-control mb-2" onchange="handleSearch()">
-                    <option value="">Semua</option>
+                    <option value="">Status Murid</option>
                     <option value="Murid Baru">Murid Baru</option>
                     <option value="Murid Mutasi">Murid Mutasi</option>
                 </select>
             </div>
 
-           
+            <select id="cariAdmin" name="cariAdmin" class="form-control mb-2" onchange="handleSearch()">
+                <option value="">Pilih Admin</option>
+                <option value="Abd Munib">Abd Munib</option>
+                <option value="Feriyanto">Feriyanto</option>
+                <option value="Muhammad Taufiq">Muhammad Taufiq</option>
+                <option value="Ruspandi">Ruspandi</option>
+                <option value="Sifaul Izet">Sifaul Izet</option>
+                <option value="Nisfu Ramadhan">Nisfu Ramadhan</option>
+                <option value="Mohammad Fahril Umam">Mohammad Fahril Umam</option>
+                <option value="Miftahul Anam">Miftahul Anam</option>
+                <option value="Syaikhul Islam">Syaikhul Islam</option>
+                <option value="Muhammad Rizal">Muhammad Rizal</option>
+                <option value="Muhammad Farhan Buhori">Muhammad Farhan Buhori</option>
+                <option value="M Jefri">M Jefri</option>
+                <option value="Baikuni">Baikuni</option>
+                <option value="Uswatul Hasanah">Uswatul Hasanah</option>
+                <option value="Selvi Damayanti">Selvi Damayanti</option>
+                <option value="Holifatus Saadah">Holifatus Saadah</option>
+                <option value="Evi Krisdayanti">Evi Krisdayanti</option>
+                <option value="Ulin Nikmah Melia P">Ulin Nikmah Melia P</option>
+                <option value="Intan Masruroh">Intan Masruroh</option>
+                <option value="Ummu Hani">Ummu Hani</option>
+                <option value="Nurdiana Kholida">Nurdiana Kholida</option>
+                <option value="Inayatul Mutmainnah">Inayatul Mutmainnah</option>
+                <option value="Ainur Rohmah">Ainur Rohmah</option>
+                <option value="Ika Yuliana">Ika Yuliana</option>
+            </select>
+            
             <p>Cari Nama</p>
             <input type="text" id="nama" class="form-control mb-2" placeholder="Nama" onchange="handleSearch()">
             <p id="keterangan"> keterangan </p>
@@ -198,7 +222,7 @@
             color: #000000;
         }
 
-        .formal, .status {
+        .formal, .status, .admin, .bn {
             font-size: 12px
             
         }
@@ -400,14 +424,6 @@
 
 
 
-
-
-
-
-
-
-
-
         /* Gaya mode terang untuk semua dropdown */
         select::-webkit-calendar-picker-indicator {
             color: #0a0a0a; /* Warna teks pada mode gelap */
@@ -457,6 +473,8 @@
             const searchSantri = document.getElementById('cariSantri').value.toLowerCase();
             const searchFormal = document.getElementById('cariFormal').value.toLowerCase();
             const searchStatus = document.getElementById('cariStatus').value.toLowerCase();
+            const searchAdmin = document.getElementById('cariAdmin').value.toLowerCase();
+            const searchBN = document.getElementById('cariBN').value;
             const searchText = document.getElementById('nama').value.toLowerCase();
 
             const containers = document.querySelectorAll('.container');
@@ -465,13 +483,17 @@
             containers.forEach(container => {
                 const title = container.querySelector('h3');
                 const santri = title.querySelector('.santri').textContent.toLowerCase();
+                const bn = title.querySelector('.bn').textContent;
                 const nama = title.querySelector('.nama').textContent.toLowerCase();
                 const formal = title.querySelector('.formal').textContent.toLowerCase();
                 const status = title.querySelector('.status').textContent.toLowerCase();
+                const admin = title.querySelector('.admin').textContent.toLowerCase();
 
                 if (santri.includes(searchSantri) &&
+                    bn.startsWith(searchBN) &&
                     nama.includes(searchText) &&
                     formal.includes(searchFormal) &&
+                    admin.includes(searchAdmin) &&
                     status.includes(searchStatus)) {
                     container.style.display = 'block';
                     filteredEntries.push(container);
@@ -521,8 +543,7 @@
         
 
 
-// Fungsi untuk merender data ke dalam HTML
-function renderData(data) {
+        function renderData(data) {
     const dataContainer = document.getElementById('dataContainer');
     dataContainer.innerHTML = '';
 
@@ -532,28 +553,21 @@ function renderData(data) {
 
         const title = document.createElement('h3');
 
-        // Membuat elemen span untuk mengatur ukuran font yang berbeda
-        const namaSpan = document.createElement('span');
-        namaSpan.classList.add('nama');
-        namaSpan.textContent = item.Nama;
-
-        const formalSpan = document.createElement('span');
-        formalSpan.classList.add('formal');
-        formalSpan.textContent = `${item.MelanjutkanKe}`;
-
-        const statusSpan = document.createElement('span');
-        statusSpan.classList.add('status');
-        statusSpan.textContent = `${item.StatusPendaftar}`;
-
-        const santriSpan = document.createElement('span');
-        santriSpan.classList.add('santri');
-        santriSpan.textContent = `${item.Status}`;
+        // Membuat elemen span menggunakan fungsi createSpan
+        const namaSpan = createSpan('nama', item.Nama);
+        const idsSpan = createSpan('bn', item.IDS);
+        const formalSpan = createSpan('formal', item.MelanjutkanKe);
+        const statusSpan = createSpan('status', item.StatusPendaftar);
+        const santriSpan = createSpan('santri', item.Status);
+        const adminSpan = createSpan('admin', item.PenanggungJawab);
 
         // Menambahkan span ke dalam judul
         title.appendChild(namaSpan);
+        title.appendChild(idsSpan);
         title.appendChild(formalSpan);
         title.appendChild(statusSpan);
         title.appendChild(santriSpan);
+        title.appendChild(adminSpan);
 
         title.addEventListener('click', function() {
             const details = container.querySelector('.details');
@@ -597,7 +611,6 @@ function renderData(data) {
         addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.IDS, item.TataTertib);
         addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.IDS, item.KartuSantri);
         addCheckbox(checkboxContainer, 'KetSeragamPondok', 'Sarung / Gamis', item.KetSeragamPondok, item.NIK, item.IDS, item.SeragamPondok);
-        
 
         details.appendChild(checkboxContainer);
 
@@ -610,6 +623,15 @@ function renderData(data) {
     loader.classList.remove('visible');
     loader.classList.add('hidden');
 }
+
+
+function createSpan(className, textContent) {
+    const span = document.createElement('span');
+    span.classList.add(className);
+    span.textContent = textContent;
+    return span;
+}
+
 
 // Fungsi tambahan untuk menambahkan baris data ke dalam tabel
 function addDataRow(tbody, label, detail) {
