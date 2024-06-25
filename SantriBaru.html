@@ -510,227 +510,233 @@
         
 
 
-        // Fungsi untuk merender data ke dalam HTML
-        function renderData(data) {
-            const dataContainer = document.getElementById('dataContainer');
-            dataContainer.innerHTML = '';
+// Fungsi untuk merender data ke dalam HTML
+function renderData(data) {
+    const dataContainer = document.getElementById('dataContainer');
+    dataContainer.innerHTML = '';
 
-            data.forEach(item => {
-                const container = document.createElement('div');
-                container.classList.add('container');
+    data.forEach(item => {
+        const container = document.createElement('div');
+        container.classList.add('container');
 
-                const title = document.createElement('h3');
+        const title = document.createElement('h3');
 
-                // Membuat elemen span untuk mengatur ukuran font yang berbeda
-                const namaSpan = document.createElement('span');
-                namaSpan.classList.add('nama');
-                namaSpan.textContent = item.Nama;
+        // Membuat elemen span untuk mengatur ukuran font yang berbeda
+        const namaSpan = document.createElement('span');
+        namaSpan.classList.add('nama');
+        namaSpan.textContent = item.Nama;
 
-                const formalSpan = document.createElement('span');
-                formalSpan.classList.add('formal');
-                formalSpan.textContent = `${item.MelanjutkanKe}`;
+        const formalSpan = document.createElement('span');
+        formalSpan.classList.add('formal');
+        formalSpan.textContent = `${item.MelanjutkanKe}`;
 
-                const statusSpan = document.createElement('span');
-                statusSpan.classList.add('status');
-                statusSpan.textContent = `${item.StatusPendaftar}`;
+        const statusSpan = document.createElement('span');
+        statusSpan.classList.add('status');
+        statusSpan.textContent = `${item.StatusPendaftar}`;
 
-                const santriSpan = document.createElement('span');
-                santriSpan.classList.add('santri');
-                santriSpan.textContent = `${item.Status}`;
+        const santriSpan = document.createElement('span');
+        santriSpan.classList.add('santri');
+        santriSpan.textContent = `${item.Status}`;
 
-                // Menambahkan span ke dalam judul
-                title.appendChild(namaSpan);
-                title.appendChild(formalSpan);
-                title.appendChild(statusSpan);
-                title.appendChild(santriSpan);
+        // Menambahkan span ke dalam judul
+        title.appendChild(namaSpan);
+        title.appendChild(formalSpan);
+        title.appendChild(statusSpan);
+        title.appendChild(santriSpan);
 
-                title.addEventListener('click', function() {
-                    const details = container.querySelector('.details');
-                    details.style.display = details.style.display === 'block' ? 'none' : 'block';
-                });
-
-                const details = document.createElement('div');
-                details.classList.add('details');
-
-                // Buat tabel untuk menyusun data dalam dua kolom
-                const table = document.createElement('table');
-                const tbody = document.createElement('tbody');
-
-                // Menambahkan baris data
-                addDataRow(tbody, 'NIK', item.NIK);
-                addDataRow(tbody, 'IDS', item.IDS);
-                addDataRow(tbody, 'Domisili', item.Daerah + "." + item.NoKamar);
-                addDataRow(tbody, 'TTL', item.TempatLahir + ", " + formatDate(item.TanggalLahir));
-                addDataRow(tbody, 'Diniyah', item.Diniyah);
-                addDataRow(tbody, 'Formal', item.Formal);
-                addDataRow(tbody, 'Ayah', item.Ayah);
-                addDataRow(tbody, 'Ibu', item.Ibu);
-                addDataRow(tbody, 'Alamat', `${item.Dusun} ${item.RT}/${item.RW}, ${item.Desa}, ${item.Kecamatan}, ${item.Kabupaten}`);
-                addDataRow(tbody, 'Tanggal daftar', item.Hijriyah + " H. - " + formatDate(item.Masehi) + " M.");
-                addDataRow(tbody, 'Admin', item.PenanggungJawab);
-                addDataRow(tbody, 'Pembayaran', item.Total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-                addDataRow(tbody, 'Pesantren', item.Bayar_Pesantren.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-                addDataRow(tbody, 'Madrasah', item.Bayar_Madrasah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-                addDataRow(tbody, 'Formal', item.Bayar_Formal.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-                addDataRow(tbody, '-----------------------', '-----------------------------------------------');
-
-                table.appendChild(tbody);
-                details.appendChild(table);
-
-                // Menambahkan checkbox untuk KetNailulMurod, KetKalender, KetKartuSantri, dan KetTataTertib
-                const checkboxContainer = document.createElement('div');
-                checkboxContainer.classList.add('checkbox-container');
-
-                addCheckbox(checkboxContainer, 'KetNailulMurod', 'Nailul Murod', item.KetNailulMurod, item.NIK, item.IDS, item.NailulMurod);
-                addCheckbox(checkboxContainer, 'KetKalender', 'Kalender', item.KetKalender, item.NIK, item.IDS, item.Kalender);
-                addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.IDS, item.TataTertib);
-                addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.IDS, item.KartuSantri);
-
-                details.appendChild(checkboxContainer);
-
-                container.appendChild(title);
-                container.appendChild(details);
-                dataContainer.appendChild(container);
-            });
-
-            const loader = document.getElementById('loader');
-            loader.classList.remove('visible');
-            loader.classList.add('hidden');
-        }
-
-        // Fungsi tambahan untuk menambahkan baris data ke dalam tabel
-        function addDataRow(tbody, label, detail) {
-            const row = document.createElement('tr');
-            const labelCell = document.createElement('td');
-            labelCell.textContent = label;
-            const detailCell = document.createElement('td');
-            detailCell.textContent = detail;
-            row.appendChild(labelCell);
-            row.appendChild(detailCell);
-            tbody.appendChild(row);
-        }
-
-        let checkboxUpdateQueue = [];
-        let debounceTimeout = null;
-
-        function addCheckbox(container, name, opsi, checked, nik, ids, labelValue) {
-            const checkboxWrapper = document.createElement('div');
-            checkboxWrapper.classList.add('checkbox-wrapper');
-
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.checked = checked;
-            checkbox.addEventListener('change', function() {
-                queueCheckboxStatus(nik, ids, name, checkbox.checked);
-            });
-
-            const label = document.createElement('label');
-            label.textContent = `${opsi} : ${labelValue}`;
-
-            checkboxWrapper.appendChild(checkbox);
-            checkboxWrapper.appendChild(label);
-            container.appendChild(checkboxWrapper);
-        }
-
-        function queueCheckboxStatus(nik, ids, name, status) {
-            const existingIndex = checkboxUpdateQueue.findIndex(item => item.nik === nik && item.ids === ids && item.name === name);
-            if (existingIndex >= 0) {
-                checkboxUpdateQueue[existingIndex].status = status;
-            } else {
-                checkboxUpdateQueue.push({ nik, ids, name, status });
-            }
-
-            if (debounceTimeout) {
-                clearTimeout(debounceTimeout);
-            }
-
-            debounceTimeout = setTimeout(() => {
-                processCheckboxQueue();
-            }, 2000);
-
-            updateLoadingIndicator();
-        }
-
-        function processCheckboxQueue() {
-            if (checkboxUpdateQueue.length > 0) {
-                const updates = checkboxUpdateQueue.slice();
-                checkboxUpdateQueue = [];
-
-                updates.forEach(update => {
-                    postCheckboxStatus(update.nik, update.ids, update.name, update.status).then(() => {
-                        decrementLoadingCount();
-                    });
-                });
-            }
-        }
-
-        function postCheckboxStatus(nik, ids, name, status) {
-            const data = `NIK=${encodeURIComponent(nik)}&IDS=${encodeURIComponent(ids)}&${name}=${encodeURIComponent(status)}`;
-            return postJSON(data);
-        }
-
-        // Fungsi untuk memformat tanggal
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('id-ID', options);
-        }
-
-        // Fungsi untuk mengirimkan permintaan POST
-        async function postJSON(header) {
-            const url = "https://script.google.com/macros/s/AKfycbzANtzKbwFWCvWd4UP_OrezPyzoVzosXONdax0JdncfvnTsGIbQIrZMAnKZWq62dfQGhw/exec?action=UpdateData";
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: header
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                return await response.text();
-            } catch (error) {
-                throw new Error('There has been a problem with your fetch operation:', error);
-            }
-        }
-
-        // Memanggil fungsi loadData() saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', function() {
-            loadData();
+        title.addEventListener('click', function() {
+            const details = container.querySelector('.details');
+            details.style.display = details.style.display === 'block' ? 'none' : 'block';
         });
 
-        // Fungsi untuk mengupdate indikator loading
-        function updateLoadingIndicator() {
+        const details = document.createElement('div');
+        details.classList.add('details');
+
+        // Buat tabel untuk menyusun data dalam dua kolom
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+
+        // Menambahkan baris data
+        addDataRow(tbody, 'NIK', item.NIK);
+        addDataRow(tbody, 'IDS', item.IDS);
+        addDataRow(tbody, 'Domisili', item.Daerah + "." + item.NoKamar);
+        addDataRow(tbody, 'TTL', item.TempatLahir + ", " + formatDate(item.TanggalLahir));
+        addDataRow(tbody, 'Diniyah', item.Diniyah);
+        addDataRow(tbody, 'Formal', item.Formal);
+        addDataRow(tbody, 'Ayah', item.Ayah);
+        addDataRow(tbody, 'Ibu', item.Ibu);
+        addDataRow(tbody, 'Alamat', `${item.Dusun} ${item.RT}/${item.RW}, ${item.Desa}, ${item.Kecamatan}, ${item.Kabupaten}`);
+        addDataRow(tbody, 'Tanggal daftar', item.Hijriyah + " H. - " + formatDate(item.Masehi) + " M.");
+        addDataRow(tbody, 'Admin', item.PenanggungJawab);
+        addDataRow(tbody, 'Pembayaran', item.Total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+        addDataRow(tbody, 'Pesantren', item.Bayar_Pesantren.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+        addDataRow(tbody, 'Madrasah', item.Bayar_Madrasah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+        addDataRow(tbody, 'Formal', item.Bayar_Formal.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+        addDataRow(tbody, '-----------------------', '-----------------------------------------------');
+
+        table.appendChild(tbody);
+        details.appendChild(table);
+
+        // Menambahkan checkbox untuk KetNailulMurod, KetKalender, KetKartuSantri, dan KetTataTertib
+        const checkboxContainer = document.createElement('div');
+        checkboxContainer.classList.add('checkbox-container');
+
+        addCheckbox(checkboxContainer, 'KetNailulMurod', 'Nailul Murod', item.KetNailulMurod, item.NIK, item.IDS, item.NailulMurod);
+        addCheckbox(checkboxContainer, 'KetKalender', 'Kalender', item.KetKalender, item.NIK, item.IDS, item.Kalender);
+        addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.IDS, item.TataTertib);
+        addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.IDS, item.KartuSantri);
+
+        details.appendChild(checkboxContainer);
+
+        container.appendChild(title);
+        container.appendChild(details);
+        dataContainer.appendChild(container);
+    });
+
+    const loader = document.getElementById('loader');
+    loader.classList.remove('visible');
+    loader.classList.add('hidden');
+}
+
+// Fungsi tambahan untuk menambahkan baris data ke dalam tabel
+function addDataRow(tbody, label, detail) {
+    const row = document.createElement('tr');
+    const labelCell = document.createElement('td');
+    labelCell.textContent = label;
+    const detailCell = document.createElement('td');
+    detailCell.textContent = detail;
+    row.appendChild(labelCell);
+    row.appendChild(detailCell);
+    tbody.appendChild(row);
+}
+
+let checkboxUpdateQueue = [];
+let debounceTimeouts = {};
+let totalCheckboxes = 0;
+
+function addCheckbox(container, name, opsi, checked, nik, ids, labelValue) {
+    const checkboxWrapper = document.createElement('div');
+    checkboxWrapper.classList.add('checkbox-wrapper');
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = checked;
+    checkbox.addEventListener('change', function() {
+        queueCheckboxStatus(nik, ids, name, checkbox.checked);
+    });
+
+    const label = document.createElement('label');
+    label.textContent = `${opsi} : ${labelValue}`;
+
+    checkboxWrapper.appendChild(checkbox);
+    checkboxWrapper.appendChild(label);
+    container.appendChild(checkboxWrapper);
+}
+
+function queueCheckboxStatus(nik, ids, name, status) {
+    const existingIndex = checkboxUpdateQueue.findIndex(item => item.nik === nik && item.ids === ids && item.name === name);
+    if (existingIndex >= 0) {
+        checkboxUpdateQueue[existingIndex].status = status;
+    } else {
+        checkboxUpdateQueue.push({ nik, ids, name, status });
+        totalCheckboxes += 1;
+        updateLoadingIndicator();
+    }
+
+    if (debounceTimeouts[`${nik}-${ids}`]) {
+        clearTimeout(debounceTimeouts[`${nik}-${ids}`]);
+    }
+
+    debounceTimeouts[`${nik}-${ids}`] = setTimeout(() => {
+        processCheckboxQueue(nik, ids);
+        delete debounceTimeouts[`${nik}-${ids}`];
+    }, 2000);
+}
+
+function processCheckboxQueue(nik, ids) {
+    const updates = checkboxUpdateQueue.filter(item => item.nik === nik && item.ids === ids);
+    checkboxUpdateQueue = checkboxUpdateQueue.filter(item => !(item.nik === nik && item.ids === ids));
+
+    if (updates.length > 0) {
+        const header = updates.map(update => `${update.name}=${encodeURIComponent(update.status)}`).join('&');
+        const data = `NIK=${encodeURIComponent(nik)}&IDS=${encodeURIComponent(ids)}&${header}`;
+        postCheckboxStatus(data).then(() => {
+            totalCheckboxes -= updates.length;
+            updateLoadingIndicator();
+        });
+    }
+}
+
+// Fungsi untuk memposting status checkbox
+function postCheckboxStatus(header) {
+    return postJSON(header).then(() => {
+        decrementLoadingCount();
+    });
+}
+
+// Fungsi untuk mengupdate indikator loading
+function updateLoadingIndicator() {
+    const indicator = document.getElementById('loading-indicator');
+    const count = document.getElementById('loading-count');
+    const pendingCount = totalCheckboxes;
+
+    if (pendingCount > 0) {
+        indicator.classList.remove('hidden');
+        count.textContent = pendingCount;
+    } else {
+        indicator.classList.add('hidden');
+    }
+}
+
+// Fungsi untuk mengurangi hitungan loading
+function decrementLoadingCount() {
+    const count = document.getElementById('loading-count');
+    let currentCount = parseInt(count.textContent, 10);
+
+    if (currentCount > 0) {
+        currentCount -= 1;
+        count.textContent = currentCount;
+
+        if (currentCount === 0) {
             const indicator = document.getElementById('loading-indicator');
-            const count = document.getElementById('loading-count');
-            const pendingCount = checkboxUpdateQueue.length;
+            indicator.classList.add('hidden');
+        }
+    }
+}
 
-            if (pendingCount > 0) {
-                indicator.classList.remove('hidden');
-                count.textContent = pendingCount;
-            } else {
-                indicator.classList.add('hidden');
-            }
+// Fungsi untuk memformat tanggal
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('id-ID', options);
+}
+
+// Fungsi untuk mengirimkan permintaan POST
+async function postJSON(header) {
+    const url = "https://script.google.com/macros/s/AKfycbzANtzKbwFWCvWd4UP_OrezPyzoVzosXONdax0JdncfvnTsGIbQIrZMAnKZWq62dfQGhw/exec?action=UpdateData";
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: header
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
 
-        // Fungsi untuk mengurangi hitungan loading
-        function decrementLoadingCount() {
-            const count = document.getElementById('loading-count');
-            let currentCount = parseInt(count.textContent, 10);
+        return await response.text();
+    } catch (error) {
+        throw new Error('There has been a problem with your fetch operation:', error);
+    }
+}
 
-            if (currentCount > 0) {
-                currentCount -= 1;
-                count.textContent = currentCount;
+// Memanggil fungsi loadData() saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    loadData();
+});
 
-                if (currentCount === 0) {
-                    const indicator = document.getElementById('loading-indicator');
-                    indicator.classList.add('hidden');
-                }
-            }
-        }
 
     </script>
 
