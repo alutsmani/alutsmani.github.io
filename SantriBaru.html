@@ -61,6 +61,10 @@
                 <option value="1">Banin</option>
                 <option value="2">Banat</option>
             </select>
+            <div class="TTL">
+                <input type="text" id="cariDaerah" class="form-control mb-2" placeholder="Daerah" onchange="handleSearch()">
+                <input type="text" id="cariNoKamar" class="form-control mb-2" placeholder="No Kamar" onchange="handleSearch()">
+            </div>
 
             <p>Filter Formal dan Status Murid</p>
             <div class="TTL">
@@ -78,7 +82,7 @@
                     <option value="Murid Mutasi">Murid Mutasi</option>
                 </select>
             </div>
-
+            
             <select id="cariAdmin" name="cariAdmin" class="form-control mb-2" onchange="handleSearch()">
                 <option value="">Pilih Admin</option>
                 <option value="Abd Munib">Abd Munib</option>
@@ -107,6 +111,7 @@
                 <option value="Ika Yuliana">Ika Yuliana</option>
             </select>
             
+
             <p>Cari Nama</p>
             <input type="text" id="nama" class="form-control mb-2" placeholder="Nama" onchange="handleSearch()">
             <p id="keterangan"> keterangan </p>
@@ -227,7 +232,7 @@
             
         }
 
-        .admin, .bn {
+        .admin, .bn, .daerah, .nokamar {
             display: none;
         }
         .santri {
@@ -476,6 +481,9 @@
         function handleSearch() {
             const searchSantri = document.getElementById('cariSantri').value.toLowerCase();
             const searchFormal = document.getElementById('cariFormal').value.toLowerCase();
+            const searchDaerah = document.getElementById('cariDaerah').value.toLowerCase();
+            const searchNo = document.getElementById('cariNoKamar').value.toLowerCase();
+
             const searchStatus = document.getElementById('cariStatus').value.toLowerCase();
             const searchAdmin = document.getElementById('cariAdmin').value.toLowerCase();
             const searchBN = document.getElementById('cariBN').value;
@@ -488,6 +496,8 @@
                 const title = container.querySelector('h3');
                 const santri = title.querySelector('.santri').textContent.toLowerCase();
                 const bn = title.querySelector('.bn').textContent;
+                const daerah = title.querySelector('.daerah').textContent.toLowerCase();
+                const nokamar = title.querySelector('.nokamar').textContent.toLowerCase();
                 const nama = title.querySelector('.nama').textContent.toLowerCase();
                 const formal = title.querySelector('.formal').textContent.toLowerCase();
                 const status = title.querySelector('.status').textContent.toLowerCase();
@@ -495,6 +505,8 @@
 
                 if (santri.includes(searchSantri) &&
                     bn.startsWith(searchBN) &&
+                    daerah.startsWith(searchDaerah) &&
+                    nokamar.startsWith(searchNo) &&
                     nama.includes(searchText) &&
                     formal.includes(searchFormal) &&
                     admin.includes(searchAdmin) &&
@@ -560,6 +572,8 @@
         // Membuat elemen span menggunakan fungsi createSpan
         const namaSpan = createSpan('nama', item.Nama);
         const idsSpan = createSpan('bn', item.IDS);
+        const DaerahSpan = createSpan('daerah', item.Daerah);
+        const NoSpan = createSpan('nokamar', item.NoKamar);
         const formalSpan = createSpan('formal', item.MelanjutkanKe);
         const statusSpan = createSpan('status', item.StatusPendaftar);
         const santriSpan = createSpan('santri', item.Status);
@@ -568,6 +582,8 @@
         // Menambahkan span ke dalam judul
         title.appendChild(namaSpan);
         title.appendChild(idsSpan);
+        title.appendChild(DaerahSpan);
+        title.appendChild(NoSpan);
         title.appendChild(formalSpan);
         title.appendChild(statusSpan);
         title.appendChild(santriSpan);
