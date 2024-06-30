@@ -227,17 +227,25 @@ function updateCounter(increment = true) {
 
         function handleSearch() {
             const searchDiniyah = document.getElementById('cariDiniyah').value.toLowerCase();
-            const searchText = document.getElementById('nama').value.toLowerCase();
+            const searchKelas = document.getElementById('cariKelas').value.toLowerCase();
+            const searchKel = document.getElementById('cariKel').value.toLowerCase();
 
+            const searchText = document.getElementById('nama').value.toLowerCase();
+            
             const containers = document.querySelectorAll('.container');
             const filteredEntries = [];
 
             containers.forEach(container => {
                 const title = container.querySelector('h3');
                 const diniyah = title.querySelector('.diniyah').textContent.toLowerCase();
+                const kelas = title.querySelector('.kelasMD').textContent.toLocaleLowerCase();
+                const kel = title.querySelector('.kelMD').textContent.toLowerCase();
+
                 const nama = title.querySelector('.nama').textContent.toLowerCase();
                 
-                if (diniyah.startsWith(searchDiniyah) &&
+                if (diniyah.includes(searchDiniyah) &&
+                    kelas.includes(searchKelas) &&
+                    kel.includes(searchKel) &&
                     nama.includes(searchText)) {
                     container.style.display = 'block';
                     filteredEntries.push(container);
@@ -290,14 +298,15 @@ function renderData(data) {
         // Membuat elemen span untuk mengatur ukuran font yang berbeda
 
         const namaSpan = createSpan('nama', item.Nama);
-        const diniyahSpan = createSpan('diniyah', item.Diniyah);
-        const idsSpan = createSpan('ids', item.IDS);
-
+        const diniyahSpan = createSpan('diniyah', item.Diniyah + " [" + item.KelasMD + "." + item.KelMD + "]");
+        const kelasSpan = createSpan('kelasMD', item.KelasMD);
+        const kelSpan = createSpan('kelMD', item.KelMD);
 
         // Menambahkan span ke dalam judul
         title.appendChild(namaSpan);
         title.appendChild(diniyahSpan);
-        title.appendChild(idsSpan);
+        title.appendChild(kelasSpan);
+        title.appendChild(kelSpan);
 
         title.addEventListener('click', function() {
             const details = container.querySelector('.details');
@@ -340,7 +349,7 @@ function renderData(data) {
         inputContainer.classList.add('input-container');
 
         const selectElement = createSelectElement(['', "Isti'dadiyah", "Ula", "Wustha", "Ulya"], item.Diniyah || '');
-        const selectKelas = createSelectElement(['', "1", "2", "3", "4", "5", "6"], item.KelasMD || '');
+        const selectKelas = createSelectElement(['', 1, 2, 3, 4, 5, 6], item.KelasMD || '');
         const selectKel = createSelectElement(['', "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"], item.KelMD || '');
         
         const submitButton = createSubmitButton('Kirim', item.NIK, item.IDS);
