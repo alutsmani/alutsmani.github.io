@@ -25,7 +25,7 @@
       href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"
     />
 
-    
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- Tag link untuk favicon -->
     <link rel="icon" href="PSB.png" type="image/x-icon" />
@@ -119,7 +119,9 @@
         </div>
 
         <div id="dataContainer"></div>
-        <div id="loader" class="loader"></div>
+        <div class="load-frame">
+            <div id="loader" class="loader"></div>
+        </div>
     </div>
     
 
@@ -132,332 +134,7 @@
             background-color:rgb(181, 255, 200);
         }
         
-        h2 {
-            text-align: center;
-            width: 80%;
-            margin-top: 60px;
-            
-            text-shadow: -2px -2px 0 #000e35,  
-                        2px -2px 0 #000e35,
-                        -2px 2px 0 #000e35,
-                        2px 2px 0 #000e35;
-            margin-left: auto;
-            margin-right: auto;
-            color: #ffffff;
-        }
 
-        .logo-container {
-            position: absolute;
-            top: 70px;
-            left: 50%;
-            
-            transform: translateX(-50%);
-            z-index: 999; /* Menetapkan z-index agar gambar berada di atas semua elemen */
-            
-        }
-
-        .bg-utama{
-            background: linear-gradient(360deg, #ffffff27, #ffffff83);
-            border-radius: 10px; /* Sudut sudut kotak */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Bayangan */
-            padding: 20px; /* Ukuran padding yang benar */
-            width: 95%; /* Lebar kotak */
-            max-width: 600px;
-            margin:auto; /* Pusatkan kotak secara horizontal */
-            flex-direction: column;
-            position: absolute;
-            top: 130px;
-            left: 50%;
-            transform: translateX(-50%);
-            overflow: hidden;
-            transition: max-height 1s ease-out, top 0.8s ease-in-out;
-            margin-bottom: 50px;
-        }
-
-        .container {
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            padding: 0px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            width: 95%;
-            transition: max-height 1s ease-out, top 0.8s ease-in-out;
-            color: #757575;
-            background-color: #ffffff;
-        }
-        .container h3 {
-            cursor: pointer;
-            display: flex; /* Menggunakan flexbox untuk mengatur posisi */
-            flex-direction: column; /* Mengatur posisi IDS di bawah Nama */
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        
-        .details {
-            display: none;
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-top: 0px;
-            padding-bottom: 0px;
-
-        }
-        .details table {
-            width: 100%;
-            margin-top: 0px;
-        }
-        .details th {
-            text-align: left;
-            vertical-align: top;
-            color: #494949;
-            font-size: 12px;
-            min-width: 30px;
-            display: none;
-        }
-        .details td {
-            text-align: left;
-            vertical-align: top;
-            color: #888888;
-            font-size: 12px;
-        }
-
-
-        .nama {
-            font-size: 18px; /* Atur ukuran font Nama */
-            margin-bottom: 5px; /* Jarak antara Nama dan IDS */
-            color: #000000;
-        }
-
-        .formal, .status {
-            font-size: 12px
-            
-        }
-
-        .admin, .bn, .daerah, .nokamar {
-            display: none;
-        }
-        .santri {
-            font-size: 12px;
-            display: none;
-        }
-        
-
-        .input-container {
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            display: none; /* Sembunyikan input-container secara default */
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-bottom: 20px;
-        }
-        .input-container input, 
-        .input-container select {
-            margin-right: 5px;
-            border-radius: 4px;
-            height: 30px;
-            border-width: 1px;
-            border-color: #757575;
-        }
-
-        .submit-button {
-            height: 30px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-
-
-
-        .cool-box {
-            background: linear-gradient(320deg, #000000, #012363);
-            border: 2px solid #b0f7f7;
-            border-radius: 10px; /* Sudut sudut kotak */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Bayangan */
-            padding: 20px; /* Ukuran padding yang benar */
-            width: 80%; /* Lebar kotak */
-            max-width: 300px;
-            margin: auto; /* Pusatkan kotak secara horizontal */
-            flex-direction: column;
-            
-            position:static;
-            overflow: hidden;
-            transition: max-height 1s ease-out, top 0.8s ease-in-out;
-            margin-bottom: 50px;
-        }
-
-        .cool-box p {
-            font-weight: bold;
-            font-size:smaller;
-            background-color: #ffffff00;
-            color: #ffffff;
-            padding-bottom: 0px;
-            padding-top: 20px;
-        }
-
-        .cool-box label {
-            color: #888888;
-            font-weight: normal;
-            font-size: smaller;
-            padding-top: 10px;
-        }
-
-        .Heading3 {
-            text-align: center;
-            margin-bottom: 10px;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            color:#0502b4;
-        }
-
-        .Biodata{
-            background-color: #ffffff;
-            align-items: center;
-            margin: auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            margin-top: 15px;
-            max-width: 400px;
-            
-            transition: opacity 0.5s;
-        }
-
-        
-
-        .visible {
-            display: block;
-            opacity: 1;
-        }
-
-        .hidden {
-            display: none !important;
-            opacity: 0;
-        }
-
-
-        .TTL{
-            background-color: #dadada00;
-            display:inline-flex;
-            justify-content:space-between; /* Untuk memberikan jarak antara elemen-elemen di dalam .ttl */
-        }
-
-        .TTL label{
-            width: 100px;
-        }
-
-        .checkbox-container {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .checkbox-wrapper {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .checkbox-wrapper label {
-            margin-left: 8px;
-        }
-
-
-
-
-        .loader {
-            width: 15px;
-            margin: auto; /* Pusatkan kotak secara horizontal */
-            flex-direction: column;
-
-            aspect-ratio: 1;
-            border-radius: 50%;
-            animation: l5 1s infinite linear alternate;
-        }
-        @keyframes l5 {
-            0%  {box-shadow: 20px 0 #000, -20px 0 #0002;background: #000 }
-            33% {box-shadow: 20px 0 #000, -20px 0 #0002;background: #0002}
-            66% {box-shadow: 20px 0 #0002,-20px 0 #000; background: #0002}
-            100%{box-shadow: 20px 0 #0002,-20px 0 #000; background: #000 }
-        }
-
-
-        .loading-indicator {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.75);
-    color: white;
-    border-radius: 50%;
-    text-align: center;
-    z-index: 1000;
-}
-
-.spinner {
-    position: relative; /* Menjadikan posisi relatif untuk child */
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    animation: spin 1s linear infinite;
-}
-
-#loading-count {
-    position: absolute; /* Menjadikan posisi absolut untuk #loading-count */
-    top: 50%; /* Posisi di tengah vertikal */
-    left: 50%; /* Posisi di tengah horizontal */
-    transform: translate(-50%, -50%); /* Menggeser agar tepat berada di tengah */
-    font-size: 10px; /* Atur ukuran font sesuai kebutuhan */
-    color: white; /* Warna teks putih */
-}
-
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.hidden {
-    display: none;
-}
-
-
-
-
-
-        /* Gaya mode terang untuk semua dropdown */
-        select::-webkit-calendar-picker-indicator {
-            color: #0a0a0a; /* Warna teks pada mode gelap */
-            background-color: #f7f7f7; /* Warna latar belakang pada mode gelap */
-        }
-
-        /* Gaya mode gelap untuk semua dropdown */
-        @media (prefers-color-scheme: dark) {
-            select::-webkit-calendar-picker-indicator {
-                color: #fff; /* Warna teks pada mode gelap */
-                background-color: #242424; /* Warna latar belakang pada mode gelap */
-            }
-        }
-
-        #Judul{
-            font-weight: bold;
-        }
-
-        #example {
-            background-color: white; /* Memberikan latar belakang putih pada tabel */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan pada tabel */
-            
-        }
-
-    
     </style>
     
  
@@ -528,6 +205,8 @@
         document.getElementById('cariFormal').addEventListener('input', debouncedSearch);
         document.getElementById('cariStatus').addEventListener('input', debouncedSearch);
         document.getElementById('nama').addEventListener('input', debouncedSearch);
+        document.getElementById('cariDaerah').addEventListener('input', debouncedSearch);
+        document.getElementById('cariNoKamar').addEventListener('input', debouncedSearch);
 
         function debounce(func, wait) {
             let timeout;
@@ -536,7 +215,6 @@
                 timeout = setTimeout(() => func.apply(this, args), wait);
             };
         }
-
 
         // Fungsi untuk memuat data dari Google Sheets
         function loadData() {
@@ -556,244 +234,203 @@
         }
         
 
-        
-
 
         function renderData(data) {
-    const dataContainer = document.getElementById('dataContainer');
-    dataContainer.innerHTML = '';
+            const dataContainer = document.getElementById('dataContainer');
+            dataContainer.innerHTML = '';
 
-    data.forEach(item => {
-        const container = document.createElement('div');
-        container.classList.add('container');
+            data.forEach(item => {
+                const container = document.createElement('div');
+                container.classList.add('container');
 
-        const title = document.createElement('h3');
+                const title = document.createElement('h3');
 
-        // Membuat elemen span menggunakan fungsi createSpan
-        const namaSpan = createSpan('nama', item.Nama);
-        const idsSpan = createSpan('bn', item.IDS);
-        const DaerahSpan = createSpan('daerah', item.Daerah);
-        const NoSpan = createSpan('nokamar', item.NoKamar);
-        const formalSpan = createSpan('formal', item.MelanjutkanKe);
-        const statusSpan = createSpan('status', item.StatusPendaftar);
-        const santriSpan = createSpan('santri', item.Status);
-        const adminSpan = createSpan('admin', item.PenanggungJawab);
+                // Membuat elemen span menggunakan fungsi createSpan
+                const namaSpan = createSpan('nama', item.Nama);
+                const idsSpan = createSpan('bn', item.IDS);
+                const DaerahSpan = createSpan('daerah', item.Daerah);
+                const NoSpan = createSpan('nokamar', item.NoKamar);
+                const formalSpan = createSpan('formal', item.MelanjutkanKe);
+                const statusSpan = createSpan('status', item.StatusPendaftar);
+                const santriSpan = createSpan('santri', item.Status);
+                const adminSpan = createSpan('admin', item.PenanggungJawab);
 
-        // Menambahkan span ke dalam judul
-        title.appendChild(namaSpan);
-        title.appendChild(idsSpan);
-        title.appendChild(DaerahSpan);
-        title.appendChild(NoSpan);
-        title.appendChild(formalSpan);
-        title.appendChild(statusSpan);
-        title.appendChild(santriSpan);
-        title.appendChild(adminSpan);
+                // Menambahkan span ke dalam judul
+                title.appendChild(namaSpan);
+                title.appendChild(idsSpan);
+                title.appendChild(DaerahSpan);
+                title.appendChild(NoSpan);
+                title.appendChild(formalSpan);
+                title.appendChild(statusSpan);
+                title.appendChild(santriSpan);
+                title.appendChild(adminSpan);
 
-        title.addEventListener('click', function() {
-            const details = container.querySelector('.details');
-            details.style.display = details.style.display === 'block' ? 'none' : 'block';
-        });
+                title.addEventListener('click', function() {
+                    const details = container.querySelector('.details');
+                    details.style.display = details.style.display === 'block' ? 'none' : 'block';
+                });
 
-        const details = document.createElement('div');
-        details.classList.add('details');
+                const details = document.createElement('div');
+                details.classList.add('details');
 
-        // Buat tabel untuk menyusun data dalam dua kolom
-        const table = document.createElement('table');
-        const tbody = document.createElement('tbody');
+                // Buat tabel untuk menyusun data dalam dua kolom
+                const table = document.createElement('table');
+                const tbody = document.createElement('tbody');
 
-        // Menambahkan baris data
-        addDataRow(tbody, 'NIK', item.NIK);
-        addDataRow(tbody, 'IDS', item.IDS);
-        addDataRow(tbody, 'Domisili', item.Daerah + "." + item.NoKamar);
-        addDataRow(tbody, 'TTL', item.TempatLahir + ", " + formatDate(item.TanggalLahir));
-        addDataRow(tbody, 'Diniyah', item.Diniyah);
-        addDataRow(tbody, 'Formal', item.Formal);
-        addDataRow(tbody, 'Ayah', item.Ayah);
-        addDataRow(tbody, 'Ibu', item.Ibu);
-        addDataRow(tbody, 'Alamat', `${item.Dusun} ${item.RT}/${item.RW}, ${item.Desa}, ${item.Kecamatan}, ${item.Kabupaten}`);
-        addDataRow(tbody, 'Tanggal daftar', item.Hijriyah + " H. - " + formatDate(item.Masehi) + " M.");
-        addDataRow(tbody, 'Admin', item.PenanggungJawab);
-        addDataRow(tbody, 'Pembayaran', item.Total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-        addDataRow(tbody, 'Pesantren', item.Bayar_Pesantren.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-        addDataRow(tbody, 'Madrasah', item.Bayar_Madrasah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-        addDataRow(tbody, 'Formal', item.Bayar_Formal.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
-        addDataRow(tbody, '-----------------------', '-----------------------------------------------');
+                // Menambahkan baris data
+                addDataRow(tbody, 'NIK', item.NIK);
+                addDataRow(tbody, 'IDS', item.IDS);
+                addDataRow(tbody, 'Domisili', item.Daerah + "." + item.NoKamar);
+                addDataRow(tbody, 'TTL', item.TempatLahir + ", " + formatDate(item.TanggalLahir));
+                addDataRow(tbody, 'Diniyah', item.Diniyah);
+                addDataRow(tbody, 'Formal', item.Formal);
+                addDataRow(tbody, 'Ayah', item.Ayah);
+                addDataRow(tbody, 'Ibu', item.Ibu);
+                addDataRow(tbody, 'Alamat', `${item.Dusun} ${item.RT}/${item.RW}, ${item.Desa}, ${item.Kecamatan}, ${item.Kabupaten}`);
+                addDataRow(tbody, 'Tanggal daftar', item.Hijriyah + " H. - " + formatDate(item.Masehi) + " M.");
+                addDataRow(tbody, 'Admin', item.PenanggungJawab);
+                addDataRow(tbody, 'Pembayaran', item.Total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+                addDataRow(tbody, 'Pesantren', item.Bayar_Pesantren.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+                addDataRow(tbody, 'Madrasah', item.Bayar_Madrasah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+                addDataRow(tbody, 'Formal', item.Bayar_Formal.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+                addDataRow(tbody, '-----------------------', '-----------------------------------------------');
 
-        table.appendChild(tbody);
-        details.appendChild(table);
+                table.appendChild(tbody);
+                details.appendChild(table);
 
-        // Menambahkan checkbox untuk KetNailulMurod, KetKalender, KetKartuSantri, dan KetTataTertib
-        const checkboxContainer = document.createElement('div');
-        checkboxContainer.classList.add('checkbox-container');
+                // Menambahkan checkbox untuk KetNailulMurod, KetKalender, KetKartuSantri, dan KetTataTertib
+                const checkboxContainer = document.createElement('div');
+                checkboxContainer.classList.add('checkbox-container');
 
-        addCheckbox(checkboxContainer, 'KetNailulMurod', 'Nailul Murod', item.KetNailulMurod, item.NIK, item.IDS, item.NailulMurod);
-        addCheckbox(checkboxContainer, 'KetKalender', 'Kalender', item.KetKalender, item.NIK, item.IDS, item.Kalender);
-        addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.IDS, item.TataTertib);
-        addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.IDS, item.KartuSantri);
-        addCheckbox(checkboxContainer, 'KetSeragamPondok', 'Sarung / Gamis', item.KetSeragamPondok, item.NIK, item.IDS, item.SeragamPondok);
+                addCheckbox(checkboxContainer, 'KetNailulMurod', 'Nailul Murod', item.KetNailulMurod, item.NIK, item.IDS, item.NailulMurod);
+                addCheckbox(checkboxContainer, 'KetKalender', 'Kalender', item.KetKalender, item.NIK, item.IDS, item.Kalender);
+                addCheckbox(checkboxContainer, 'KetTataTertib', 'Tata Tertib', item.KetTataTertib, item.NIK, item.IDS, item.TataTertib);
+                addCheckbox(checkboxContainer, 'KetKartuSantri', 'Kartu Santri', item.KetKartuSantri, item.NIK, item.IDS, item.KartuSantri);
+                addCheckbox(checkboxContainer, 'KetSeragamPondok', 'Sarung / Gamis', item.KetSeragamPondok, item.NIK, item.IDS, item.SeragamPondok);
 
-        details.appendChild(checkboxContainer);
+                details.appendChild(checkboxContainer);
 
-        container.appendChild(title);
-        container.appendChild(details);
-        dataContainer.appendChild(container);
-    });
+                container.appendChild(title);
+                container.appendChild(details);
+                dataContainer.appendChild(container);
+            });
 
-    const loader = document.getElementById('loader');
-    loader.classList.remove('visible');
-    loader.classList.add('hidden');
-}
-
-
-function createSpan(className, textContent) {
-    const span = document.createElement('span');
-    span.classList.add(className);
-    span.textContent = textContent;
-    return span;
-}
+            const loader = document.getElementById('loader');
+            loader.classList.remove('visible');
+            loader.classList.add('hidden');
+        }
 
 
-// Fungsi tambahan untuk menambahkan baris data ke dalam tabel
-function addDataRow(tbody, label, detail) {
-    const row = document.createElement('tr');
-    const labelCell = document.createElement('td');
-    labelCell.textContent = label;
-    const detailCell = document.createElement('td');
-    detailCell.textContent = detail;
-    row.appendChild(labelCell);
-    row.appendChild(detailCell);
-    tbody.appendChild(row);
-}
 
-let checkboxUpdateQueue = [];
-let debounceTimeouts = {};
-let totalCheckboxes = 0;
 
-function addCheckbox(container, name, opsi, checked, nik, ids, labelValue) {
-    const checkboxWrapper = document.createElement('div');
-    checkboxWrapper.classList.add('checkbox-wrapper');
+        function queueCheckboxStatus(nik, ids, name, status) {
+            const existingIndex = checkboxUpdateQueue.findIndex(item => item.nik === nik && item.ids === ids && item.name === name);
+            if (existingIndex >= 0) {
+                checkboxUpdateQueue[existingIndex].status = status;
+            } else {
+                checkboxUpdateQueue.push({ nik, ids, name, status });
+                totalCheckboxes += 1;
+                updateLoadingIndicator();
+            }
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = checked;
-    checkbox.addEventListener('change', function() {
-        queueCheckboxStatus(nik, ids, name, checkbox.checked);
-    });
+            if (debounceTimeouts[`${nik}-${ids}`]) {
+                clearTimeout(debounceTimeouts[`${nik}-${ids}`]);
+            }
 
-    const label = document.createElement('label');
-    label.textContent = `${opsi} : ${labelValue}`;
+            debounceTimeouts[`${nik}-${ids}`] = setTimeout(() => {
+                processCheckboxQueue(nik, ids);
+                delete debounceTimeouts[`${nik}-${ids}`];
+            }, 1000);
+        }
 
-    checkboxWrapper.appendChild(checkbox);
-    checkboxWrapper.appendChild(label);
-    container.appendChild(checkboxWrapper);
-}
+        function processCheckboxQueue(nik, ids) {
+            const updates = checkboxUpdateQueue.filter(item => item.nik === nik && item.ids === ids);
+            checkboxUpdateQueue = checkboxUpdateQueue.filter(item => !(item.nik === nik && item.ids === ids));
 
-function queueCheckboxStatus(nik, ids, name, status) {
-    const existingIndex = checkboxUpdateQueue.findIndex(item => item.nik === nik && item.ids === ids && item.name === name);
-    if (existingIndex >= 0) {
-        checkboxUpdateQueue[existingIndex].status = status;
-    } else {
-        checkboxUpdateQueue.push({ nik, ids, name, status });
-        totalCheckboxes += 1;
-        updateLoadingIndicator();
-    }
+            if (updates.length > 0) {
+                const header = updates.map(update => `${update.name}=${encodeURIComponent(update.status)}`).join('&');
+                const data = `NIK=${encodeURIComponent(nik)}&IDS=${encodeURIComponent(ids)}&${header}`;
+                postCheckboxStatus(data).then(() => {
+                    totalCheckboxes -= updates.length;
+                    updateLoadingIndicator();
+                });
+            }
+        }
 
-    if (debounceTimeouts[`${nik}-${ids}`]) {
-        clearTimeout(debounceTimeouts[`${nik}-${ids}`]);
-    }
+        // Fungsi untuk memposting status checkbox
+        function postCheckboxStatus(header) {
+            return postJSON(header).then(() => {
+                decrementLoadingCount();
+            });
+        }
 
-    debounceTimeouts[`${nik}-${ids}`] = setTimeout(() => {
-        processCheckboxQueue(nik, ids);
-        delete debounceTimeouts[`${nik}-${ids}`];
-    }, 1000);
-}
-
-function processCheckboxQueue(nik, ids) {
-    const updates = checkboxUpdateQueue.filter(item => item.nik === nik && item.ids === ids);
-    checkboxUpdateQueue = checkboxUpdateQueue.filter(item => !(item.nik === nik && item.ids === ids));
-
-    if (updates.length > 0) {
-        const header = updates.map(update => `${update.name}=${encodeURIComponent(update.status)}`).join('&');
-        const data = `NIK=${encodeURIComponent(nik)}&IDS=${encodeURIComponent(ids)}&${header}`;
-        postCheckboxStatus(data).then(() => {
-            totalCheckboxes -= updates.length;
-            updateLoadingIndicator();
-        });
-    }
-}
-
-// Fungsi untuk memposting status checkbox
-function postCheckboxStatus(header) {
-    return postJSON(header).then(() => {
-        decrementLoadingCount();
-    });
-}
-
-// Fungsi untuk mengupdate indikator loading
-function updateLoadingIndicator() {
-    const indicator = document.getElementById('loading-indicator');
-    const count = document.getElementById('loading-count');
-    const pendingCount = totalCheckboxes;
-
-    if (pendingCount > 0) {
-        indicator.classList.remove('hidden');
-        count.textContent = pendingCount;
-    } else {
-        indicator.classList.add('hidden');
-    }
-}
-
-// Fungsi untuk mengurangi hitungan loading
-function decrementLoadingCount() {
-    const count = document.getElementById('loading-count');
-    let currentCount = parseInt(count.textContent, 10);
-
-    if (currentCount > 0) {
-        currentCount -= 1;
-        count.textContent = currentCount;
-
-        if (currentCount === 0) {
+        // Fungsi untuk mengupdate indikator loading
+        function updateLoadingIndicator() {
             const indicator = document.getElementById('loading-indicator');
-            indicator.classList.add('hidden');
+            const count = document.getElementById('loading-count');
+            const pendingCount = totalCheckboxes;
+
+            if (pendingCount > 0) {
+                indicator.classList.remove('hidden');
+                count.textContent = pendingCount;
+            } else {
+                indicator.classList.add('hidden');
+            }
         }
-    }
-}
 
-// Fungsi untuk memformat tanggal
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('id-ID', options);
-}
+        // Fungsi untuk mengurangi hitungan loading
+        function decrementLoadingCount() {
+            const count = document.getElementById('loading-count');
+            let currentCount = parseInt(count.textContent, 10);
 
-// Fungsi untuk mengirimkan permintaan POST
-async function postJSON(header) {
-    const url = "https://script.google.com/macros/s/AKfycbzANtzKbwFWCvWd4UP_OrezPyzoVzosXONdax0JdncfvnTsGIbQIrZMAnKZWq62dfQGhw/exec?action=UpdateData";
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: header
+            if (currentCount > 0) {
+                currentCount -= 1;
+                count.textContent = currentCount;
+
+                if (currentCount === 0) {
+                    const indicator = document.getElementById('loading-indicator');
+                    indicator.classList.add('hidden');
+                }
+            }
+        }
+
+        // Fungsi untuk memformat tanggal
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        // Fungsi untuk mengirimkan permintaan POST
+        async function postJSON(header) {
+            const url = "https://script.google.com/macros/s/AKfycbzANtzKbwFWCvWd4UP_OrezPyzoVzosXONdax0JdncfvnTsGIbQIrZMAnKZWq62dfQGhw/exec?action=UpdateData";
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: header
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                return await response.text();
+            } catch (error) {
+                throw new Error('There has been a problem with your fetch operation:', error);
+            }
+        }
+
+        // Memanggil fungsi loadData() saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
         });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        return await response.text();
-    } catch (error) {
-        throw new Error('There has been a problem with your fetch operation:', error);
-    }
-}
-
-// Memanggil fungsi loadData() saat halaman dimuat
-document.addEventListener('DOMContentLoaded', function() {
-    loadData();
-});
 
 
     </script>
+
+    <script src="js/script.js"></script>
 
   </body>
 </html>
