@@ -223,7 +223,7 @@ function updateCounter(increment = true) {
 
 
 
-        const debouncedSearch = debounce(handleSearch, 300);
+        //const debouncedSearch = debounce(handleSearch, 300);
 
         function handleSearch() {
             const searchDiniyah = document.getElementById('cariDiniyah').value.toLowerCase();
@@ -260,15 +260,15 @@ function updateCounter(increment = true) {
             keteranganLabel.textContent = `Menampilkan (${filteredCount}) dari ${totalEntries} data keseluruhan`;
         }
         
-        document.getElementById('nama').addEventListener('input', debouncedSearch);
+        //document.getElementById('nama').addEventListener('input', debouncedSearch);
         
-        function debounce(func, wait) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), wait);
-            };
-        }
+        //function debounce(func, wait) {
+            //let timeout;
+            //return function(...args) {
+                //clearTimeout(timeout);
+                //timeout = setTimeout(() => func.apply(this, args), wait);
+            //};
+        //}
 
 
 
